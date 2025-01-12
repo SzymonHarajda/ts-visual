@@ -8,6 +8,7 @@ import Projects from "../components/Projects";
 import Description from "../components/Description";
 import SlidingImages from "../components/SlidingImages";
 import Contact from "../components/Contact";
+import Header from "../components/Header";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +33,7 @@ export default function Home() {
       </AnimatePresence>
       {!isLoading && (
         <>
+          <Header />
           <Landing />
           <Description />
           <Projects />
