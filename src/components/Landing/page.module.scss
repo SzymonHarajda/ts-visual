@@ -1,0 +1,14 @@
+.main {
+  position: relative;
+
+  display: flex;
+
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+.main img {
+  object-fit: cover;
+  z-index: -10;
+}
