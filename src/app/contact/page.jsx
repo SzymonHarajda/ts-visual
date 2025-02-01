@@ -61,6 +61,13 @@ export default function Contact() {
     handleSubmit();
   };
 
+  useEffect(() => {
+    (async () => {
+      const LocomotiveScroll = (await import("locomotive-scroll")).default;
+      new LocomotiveScroll();
+    })();
+  }, []);
+
   return (
     <>
       <Header />
@@ -69,7 +76,7 @@ export default function Contact() {
           <div className={styles.title}>
             <span>
               <div className={styles.imageContainer}>
-                <Image fill={true} alt={"image"} src={`/hero.jpg`} />
+                <Image fill={true} alt={"image"} src={`/hero.png`} />
               </div>
               <h2>{`Let's start a project together`}</h2>
             </span>

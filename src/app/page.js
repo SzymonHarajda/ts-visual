@@ -11,7 +11,11 @@ import Header from "../components/Header";
 
 export default function Home() {
   const [hasMounted, setHasMounted] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() =>
+    typeof window !== "undefined" && sessionStorage.getItem("hasLoaded")
+      ? false
+      : true
+  );
 
   useEffect(() => {
     setHasMounted(true);
@@ -20,15 +24,14 @@ export default function Home() {
       const locomotiveScroll = new LocomotiveScroll();
       document.body.style.cursor = "default";
 
-      if (sessionStorage.getItem("hasLoaded")) {
-        setIsLoading(false);
-      } else {
-        setTimeout(() => {
+      if (!sessionStorage.getItem("hasLoaded")) {
+        const timeout = setTimeout(() => {
           setIsLoading(false);
           sessionStorage.setItem("hasLoaded", "true");
           document.body.style.cursor = "default";
           window.scrollTo(0, 0);
         }, 2000);
+        return () => clearTimeout(timeout);
       }
     })();
   }, []);
