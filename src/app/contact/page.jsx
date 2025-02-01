@@ -41,10 +41,10 @@ export default function Contact() {
 
     emailjs
       .send(
-        "service_56katck",
-        "template_xthgosf",
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         formData,
-        "LmqEX8kWmNkRRUrxo"
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
       )
       .then((response) => {
         console.log("SUCCESS!", response.status, response.text);
