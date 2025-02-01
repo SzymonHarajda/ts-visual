@@ -1,6 +1,6 @@
 body {
   margin: 0px;
   font-family: "HeyWow-Medium", sans-serif;
-  overflow: hidden; /* Hide scrollbars */
+  overflow: hidden;
   cursor: wait;
 }

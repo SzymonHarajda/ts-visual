@@ -82,7 +82,7 @@
       display: flex;
       justify-content: space-between;
       margin-top: 200px;
-      padding: 20px;
+      padding: 5px;
       div {
         display: flex;
         gap: 10px;
@@ -92,6 +92,10 @@
           margin: 0px;
           padding: 2.5px;
           cursor: pointer;
+        }
+        a {
+          text-decoration: none;
+          color: white;
         }
         p {
           &::after {

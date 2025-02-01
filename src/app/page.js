@@ -1,5 +1,4 @@
 "use client";
-import styles from "./page.module.scss";
 import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import Preloader from "../components/Preloader";
@@ -11,23 +10,32 @@ import Contact from "../components/Contact";
 import Header from "../components/Header";
 
 export default function Home() {
+  const [hasMounted, setHasMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setHasMounted(true);
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       const locomotiveScroll = new LocomotiveScroll();
 
-      setTimeout(() => {
+      if (sessionStorage.getItem("hasLoaded")) {
         setIsLoading(false);
-        document.body.style.cursor = "default";
-        window.scrollTo(0, 0);
-      }, 2000);
+      } else {
+        setTimeout(() => {
+          setIsLoading(false);
+          sessionStorage.setItem("hasLoaded", "true");
+          document.body.style.cursor = "default";
+          window.scrollTo(0, 0);
+        }, 2000);
+      }
     })();
   }, []);
 
+  if (!hasMounted) return null;
+
   return (
-    <main className={styles.main}>
+    <main className="styles.main">
       <AnimatePresence mode="wait">
         {isLoading && <Preloader />}
       </AnimatePresence>

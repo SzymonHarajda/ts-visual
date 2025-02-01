@@ -23,7 +23,7 @@ const UniformImage = ({ src, alt }) => {
     </div>
   );
 };
-export default function index({ project }) {
+export default function Projects({ project }) {
   const [isActive, setIsActive] = useState(false);
 
   const { title1, title2, src } = project;
@@ -42,7 +42,7 @@ export default function index({ project }) {
         <strong>{title1}</strong>
       </p>
       <p id={styles.gap}>{title2}</p>
-      <p>
+      <div>
         <motion.div
           variants={anim}
           animate={isActive ? "open" : "closed"}
@@ -50,7 +50,7 @@ export default function index({ project }) {
         >
           <UniformImage src={src} alt="img" />
         </motion.div>
-      </p>
+      </div>
     </div>
   );
 }

@@ -4,8 +4,9 @@ import Rounded from "../../common/RoundedButton";
 import { useRef } from "react";
 import { useScroll, motion, useTransform, useSpring } from "framer-motion";
 import Magnetic from "../../common/Magnetic";
+import Link from "next/link";
 
-export default function index() {
+export default function Contact() {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -22,14 +23,16 @@ export default function index() {
             <div className={styles.imageContainer}>
               <Image fill={true} alt={"image"} src={`/hero.jpg`} />
             </div>
-            <h2>Let's work</h2>
+            <h2> {`Let's work`} </h2>
           </span>
           <h2>together</h2>
-          <motion.div style={{ x }} className={styles.buttonContainer}>
-            <Rounded backgroundColor={"#535762"} className={styles.button}>
-              <p>Get in touch</p>
-            </Rounded>
-          </motion.div>
+          <Link href="/contact">
+            <motion.div style={{ x }} className={styles.buttonContainer}>
+              <Rounded backgroundColor={"#535762"} className={styles.button}>
+                <p>Get in touch</p>
+              </Rounded>
+            </motion.div>
+          </Link>
           <motion.svg
             style={{ rotate, scale: 2 }}
             width="9"
@@ -58,20 +61,22 @@ export default function index() {
               <h3>Version</h3>
               <p>2025 © Edition</p>
             </span>
-            <span>
-              <h3>Version</h3>
-              <p>11:49 PM GMT+2</p>
-            </span>
           </div>
           <div>
             <span>
               <h3>socials</h3>
               <Magnetic>
-                <p>Instagram</p>
+                <p>
+                  <a href="https://www.behance.net/tomaszmichalek">Behance</a>
+                </p>
               </Magnetic>
             </span>
             <Magnetic>
-              <p>Linkedin</p>
+              <p>
+                <a href="https://www.linkedin.com/in/tomasz-micha%C5%82ek">
+                  Linkedin
+                </a>
+              </p>
             </Magnetic>
           </div>
         </div>

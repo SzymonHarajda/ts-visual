@@ -10,31 +10,21 @@ import gsap from "gsap";
 import Image from "next/image";
 import Rounded from "../../common/RoundedButton";
 import Magnetic from "../../common/Magnetic";
+import Link from "next/link";
 
-export default function index() {
+export default function Header() {
   const header = useRef(null);
-
   const [isActive, setIsActive] = useState(false);
-
   const pathname = usePathname();
-
   const button = useRef(null);
-
-  useEffect(() => {
-    if (isActive) setIsActive(false);
-  }, [pathname]);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
     gsap.to(button.current, {
       scrollTrigger: {
         trigger: document.documentElement,
-
         start: 0,
-
         end: window.innerHeight / 2,
-
         onLeave: () => {
           gsap.to(button.current, {
             scale: 1,
@@ -42,7 +32,6 @@ export default function index() {
             ease: "power1.out",
           });
         },
-
         onEnterBack: () => {
           gsap.to(
             button.current,
@@ -59,28 +48,44 @@ export default function index() {
       <div ref={header} className={styles.header}>
         <div className={styles.logo}>
           <p className={styles.copyright}>©</p>
-          <Image src="/TM-VISUAL.svg" width={120} height={20} />
+          <Link href="/">
+            <Image
+              src="/TM-VISUAL.svg"
+              width={120}
+              height={20}
+              alt="TM Visual Logo"
+            />
+          </Link>
         </div>
 
         <div className={styles.nav}>
           <Magnetic>
-            <div className={styles.el}>
-              <a>Work</a>
-
+            <div
+              className={`${styles.el} ${
+                pathname === "/work" ? styles.elActive : ""
+              }`}
+            >
+              <Link href="/work">Work</Link>
               <div className={styles.indicator}></div>
             </div>
           </Magnetic>
           <Magnetic>
-            <div className={styles.el}>
-              <a>About</a>
-
+            <div
+              className={`${styles.el} ${
+                pathname === "/about" ? styles.elActive : ""
+              }`}
+            >
+              <Link href="/about">About</Link>
               <div className={styles.indicator}></div>
             </div>
           </Magnetic>
           <Magnetic>
-            <div className={styles.el}>
-              <a>Contact</a>
-
+            <div
+              className={`${styles.el} ${
+                pathname === "/contact" ? styles.elActive : ""
+              }`}
+            >
+              <Link href="/contact">Contact</Link>
               <div className={styles.indicator}></div>
             </div>
           </Magnetic>

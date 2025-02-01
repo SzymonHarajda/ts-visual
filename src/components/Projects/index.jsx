@@ -1,6 +1,6 @@
 "use client";
 import styles from "./page.module.scss";
-import Project from "./components/project";
+import Projects from "./components/project";
 import Rounded from "../../common/RoundedButton";
 const projects = [
   {
@@ -23,17 +23,19 @@ const projects = [
   },
 ];
 
-export default function Home() {
+export default function Project() {
   return (
     <main className={styles.projects}>
       <div className={styles.body}>
         {projects.map((project, index) => {
-          return <Project project={project} key={index} />;
+          return <Projects project={project} key={index} />;
         })}
       </div>
-      <Rounded>
-        <p>More work</p>
-      </Rounded>
+      <div>
+        <Rounded>
+          <p>More work</p>
+        </Rounded>
+      </div>
     </main>
   );
 }

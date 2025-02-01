@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import styles from "./style.module.scss";
 
-export default function Index() {
+export default function Curve() {
   const initialPath = `M100 0 L200 0 L200 ${window.innerHeight} L100 ${
     window.innerHeight
   } Q-100 ${window.innerHeight / 2} 100 0`;

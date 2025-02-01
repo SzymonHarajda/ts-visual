@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { opacity, slideUp } from "./anim";
 import Image from "next/image";
 
-export default function Index() {
+export default function Preloader() {
   const [progress, setProgress] = useState(0);
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
 
@@ -58,7 +58,7 @@ export default function Index() {
       className={styles.introduction}
     >
       <>
-        <motion.p variants={opacity} initial="initial" animate="enter">
+        <motion.div variants={opacity} initial="initial" animate="enter">
           <div className={styles.loading}>
             <div className={styles.logoContainer}>
               <Image
@@ -76,7 +76,7 @@ export default function Index() {
               />
             </div>
           </div>
-        </motion.p>
+        </motion.div>
         <svg>
           <motion.path
             variants={curve}
