@@ -5,7 +5,6 @@ export default function Magnetic({ children }) {
   const magnetic = useRef(null);
 
   useEffect(() => {
-    console.log(children);
     const xTo = gsap.quickTo(magnetic.current, "x", {
       duration: 1,
       ease: "elastic.out(1, 0.3)",
@@ -28,7 +27,7 @@ export default function Magnetic({ children }) {
       xTo(0);
       yTo(0);
     });
-  }, []);
+  }, [children]);
 
   return React.cloneElement(children, { ref: magnetic });
 }

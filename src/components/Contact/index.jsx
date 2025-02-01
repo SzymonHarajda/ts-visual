@@ -21,7 +21,7 @@ export default function Contact() {
         <div className={styles.title}>
           <span>
             <div className={styles.imageContainer}>
-              <Image fill={true} alt={"image"} src={`/hero.jpg`} />
+              <Image fill={true} alt={"image"} src={`/hero.png`} />
             </div>
             <h2> {`Let's work`} </h2>
           </span>

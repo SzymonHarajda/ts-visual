@@ -18,6 +18,7 @@ export default function Home() {
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       const locomotiveScroll = new LocomotiveScroll();
+      document.body.style.cursor = "default";
 
       if (sessionStorage.getItem("hasLoaded")) {
         setIsLoading(false);
