@@ -20,8 +20,8 @@ export default function Magnetic({ children }) {
         magnetic.current.getBoundingClientRect();
       const x = clientX - (left + width / 2);
       const y = clientY - (top + height / 2);
-      xTo(x * 0.35);
-      yTo(y * 0.35);
+      xTo(x * 0.25);
+      yTo(y * 0.25);
     });
     magnetic.current.addEventListener("mouseleave", (e) => {
       xTo(0);

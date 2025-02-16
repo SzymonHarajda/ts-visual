@@ -48,6 +48,14 @@ export default function Header() {
       <div ref={header} className={styles.header}>
         <div className={styles.logo}>
           <p className={styles.copyright}>©</p>
+          <div className={styles.name}>
+            <p className={styles.codeBy}>Design by</p>
+            <p className={styles.firstName}>Tomasz</p>
+            <p className={styles.lastName}>Michałek</p>
+          </div>
+        </div>
+
+        <div className={styles.centerLogo}>
           <Link href="/">
             <Image
               src="/TM-VISUAL.svg"

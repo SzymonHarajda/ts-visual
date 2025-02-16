@@ -30,6 +30,10 @@
         font-weight: 300;
       }
     }
+    a {
+      text-decoration: none;
+      color: white;
+      font-weight: 300;
     .button {
       top: 80%;
       left: calc(100% - 200px);
@@ -43,12 +47,15 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      p {
-        margin: 0px;
-        font-size: 16px;
-        font-weight: 300;
-        position: relative;
-        z-index: 1;
+
+
+        p {
+          margin: 0px;
+          font-size: 16px;
+          font-weight: 300;
+          position: relative;
+          z-index: 1;
+        }
       }
     }
   }
