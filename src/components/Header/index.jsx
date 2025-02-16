@@ -51,8 +51,8 @@ export default function Header() {
           <Link href="/">
             <Image
               src="/TM-VISUAL.svg"
-              width={120}
-              height={20}
+              width={300}
+              height={50}
               alt="TM Visual Logo"
             />
           </Link>
