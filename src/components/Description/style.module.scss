@@ -11,6 +11,7 @@
     position: relative;
     p {
       margin: 0px;
+      max-width: 75%;
       &:nth-of-type(1) {
         font-size: 36px;
         gap: 8px;
@@ -35,8 +36,8 @@
       color: white;
       font-weight: 300;
     .button {
-      top: 80%;
-      left: calc(100% - 200px);
+      top: 20%;
+      left: calc(100% );
       width: 180px;
       height: 180px;
       background-color: #1c1d20;

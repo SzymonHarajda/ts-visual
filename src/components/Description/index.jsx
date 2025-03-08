@@ -6,7 +6,13 @@ import Rounded from "../../common/RoundedButton";
 import Link from "next/link";
 export default function Description() {
   const phrase =
-    "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.";
+    "Helping brands stand out in the digital era with cutting-edge \n" +
+      "visual representati\n" +
+      " ons, that capture attention and inspire action. \n" +
+      "Together, we will make a dierence and engage your potential \n" +
+      "clients. Many years of experience in this field give us a unique \n" +
+      "position to transform your idea into bold, innovative storytel\n" +
+      " ling.";
   const description = useRef(null);
   const isInView = useInView(description);
 
@@ -29,10 +35,7 @@ export default function Description() {
             );
           })}
         </p>
-        <motion.p variants={opacity} animate={isInView ? "open" : "closed"}>
-          The combination of my passion for design, code & interaction positions
-          me in a unique place in the web design world.
-        </motion.p>
+
         <div data-scroll data-scroll-speed={0.1}>
           <Link href={"/about"}>
               <Rounded className={styles.button}>

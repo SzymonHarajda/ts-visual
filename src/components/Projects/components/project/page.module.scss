@@ -7,38 +7,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
-.project p {
+.project .prg{
   font-size: 5vw;
-  margin: 0px;
-}
-.project p:nth-of-type(1) {
-  margin-right: 0.75vw;
-}
-.project p:nth-of-type(2) {
-  margin-left: 0.75vw;
-}
-
-.project:last-of-type {
-  border-bottom: 2px solid black;
-}
-.project img {
-  width: 10vw;
-  height: auto;
-}
-.project .imgContainer {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  width: 0;
-}
-.project #gap {
-  padding-right: 20px;
-}
-.uniformImageContainer {
-  position: relative;
-  width: 300px; // ustalona szerokość
-  height: 200px; // ustalona wysokość
-  overflow: hidden; // zapobieganie przekraczaniu obrazów poza kontener
+  margin: 50px;
 }

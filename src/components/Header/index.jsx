@@ -65,6 +65,16 @@ export default function Header() {
         <div className={styles.nav}>
           <Magnetic>
             <div
+                className={`${styles.el} ${
+                    pathname === "/" ? styles.elActive : ""
+                }`}
+            >
+              <Link href="/">Home</Link>
+              <div className={styles.indicator}></div>
+            </div>
+          </Magnetic>
+          <Magnetic>
+            <div
               className={`${styles.el} ${
                 pathname === "/work" ? styles.elActive : ""
               }`}

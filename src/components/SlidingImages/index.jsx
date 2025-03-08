@@ -5,25 +5,25 @@ import Image from "next/image";
 
 const slider1 = [
   {
-    color: "#e3e5e7",
+    color: "white",
 
     src: "/small/cam_2.jpg",
   },
 
   {
-    color: "#d6d7dc",
+    color: "white",
 
     src: "/grano/cam_3.jpg",
   },
 
   {
-    color: "#e3e3e3",
+    color: "white",
 
     src: "/Arlon/Lobby.jpg",
   },
 
   {
-    color: "#e3e3d9",
+    color: "white",
 
     src: "/Souverain/cam_12.jpg",
   },
@@ -31,25 +31,25 @@ const slider1 = [
 
 const slider2 = [
   {
-    color: "#d4e3ec",
+    color: "white",
 
     src: "/small/cam_5.jpg",
   },
 
   {
-    color: "#e5e0e1",
+    color: "white",
 
     src: "/grano/CAM_4.jpg",
   },
 
   {
-    color: "#d7d4cf",
+    color: "white",
 
     src: "/modern/cam_3.jpg",
   },
 
   {
-    color: "#e1dad6",
+    color: "white",
 
     src: "/Arlon/cam_14.jpg",
   },
@@ -75,6 +75,8 @@ export default function SlidingImages() {
       <motion.div style={{ x: x1 }} className={styles.slider}>
         {slider1.map((project, index) => {
           return (
+              <>
+              <hr/>
             <div
               key={index}
               className={styles.project}
@@ -89,6 +91,7 @@ export default function SlidingImages() {
                 />
               </div>
             </div>
+              </>
           );
         })}
       </motion.div>
@@ -96,15 +99,18 @@ export default function SlidingImages() {
       <motion.div style={{ x: x2 }} className={styles.slider}>
         {slider2.map((project, index) => {
           return (
-            <div
-              key={index}
-              className={styles.project}
-              style={{ backgroundColor: project.color }}
-            >
-              <div key={index} className={styles.imageContainer}>
-                <Image fill={true} alt={"image"} src={`${project.src}`} />
-              </div>
-            </div>
+              <>
+                <hr/>
+                <div
+                  key={index}
+                  className={styles.project}
+                  style={{ backgroundColor: project.color }}
+                >
+                  <div key={index} className={styles.imageContainer}>
+                    <Image fill={true} alt={"image"} src={`${project.src}`} />
+                  </div>
+                </div>
+              </>
           );
         })}
       </motion.div>
