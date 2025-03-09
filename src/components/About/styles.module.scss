@@ -7,17 +7,16 @@
   background-color: #ffffff;
   z-index: 1;
   h2{
-    max-width: 100%;
     font-size: 2rem;
     font-weight: 400;
     margin: 0 0 1rem 0;
   }
   .about {
-
     display: flex;
-    justify-content: center;
-    padding: 50px;
+    align-content: center;
+    padding: 120px;
     background-color: #ffffff;
+    gap: 100px;
   }
 
   .aboutContainer {
@@ -30,7 +29,6 @@
     position: relative;
   }
   .imageContainer {
-    left: 100px;
     border: 1px solid white;
     position: relative;
     overflow: hidden;

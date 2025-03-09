@@ -37,6 +37,22 @@ const projects = [
     slug: "small-apartment",
     type: "big"
   },
+  {
+    title: "Small Apartment",
+    category: "Interior",
+    year: "2023",
+    image: "/small/cam_1.jpg",
+    slug: "small-apartment",
+    type: "small"
+  },
+  {
+    title: "Grano Apartments",
+    category: "Architecture",
+    year: "2022",
+    image: "/grano/CAM_1.jpg",
+    slug: "grano-apartments",
+    type: "small"
+  },
   // Add type to rest of projects (alternating between small and big)
   // ...
 ];
