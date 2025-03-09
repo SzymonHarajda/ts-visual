@@ -3,15 +3,21 @@
   flex-direction: column;
   gap: 3vw;
   position: relative;
-  color: white;
-  background-color: #141516;
+  color: #141516;
+  background-color: #ffffff;
   z-index: 1;
-
+  h2{
+    max-width: 100%;
+    font-size: 2rem;
+    font-weight: 400;
+    margin: 0 0 1rem 0;
+  }
   .about {
+
     display: flex;
     justify-content: center;
     padding: 50px;
-    background-color: #141516;
+    background-color: #ffffff;
   }
 
   .aboutContainer {
@@ -24,10 +30,11 @@
     position: relative;
   }
   .imageContainer {
+    left: 100px;
     border: 1px solid white;
     position: relative;
-    border-radius: 50%;
     overflow: hidden;
+    margin: 0 0 1rem 0;
 
     img {
       object-fit: cover;
@@ -35,10 +42,15 @@
   }
 
   .aboutText {
-    max-width: 600px;
+    max-width: 800px;
     font-size: 1.2rem;
     line-height: 1.5;
+     p {
+       max-width: 580px;
+
+     }
   }
+
 
   .circleContainer {
     position: relative;
@@ -48,10 +60,10 @@
       width: 120%;
       left: -10%;
       border-radius: 0 0 50% 50%;
-      background-color: #141516;
+      background-color: #ffffff;
       z-index: 1;
       position: absolute;
-      box-shadow: 0px 60px 50px rgba(0, 0, 0, 0.748);
+      box-shadow: 1px 60px 50px rgba(0, 0, 0, 0.748);
     }
   }
 }
