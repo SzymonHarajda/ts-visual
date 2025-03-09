@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "./page.module.scss";
 import Magnetic from "../../../../common/Magnetic";
+import Link from "next/link";
 
 
 export default function Projects() {
@@ -11,9 +12,11 @@ export default function Projects() {
     <div
       className={styles.project}
     >
-      <Magnetic >
-        <strong className={styles.prg}>Work</strong>
-      </Magnetic>
+        <Magnetic >
+          <Link href={'/work'}>
+          <strong className={styles.prg}>Work</strong>
+          </Link>
+        </Magnetic>
 
     </div>
   );

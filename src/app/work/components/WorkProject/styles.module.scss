@@ -1,0 +1,68 @@
+.projectCard {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
+  .projectItem {
+    cursor: pointer;
+    height: 100%;
+    position: relative;
+
+    .imageContainer {
+      position: relative;
+      width: 100%;
+      height: 90dvh;
+      overflow: hidden;
+      display: block;
+
+      .imageWrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .projectImage {
+        object-fit: cover;
+        display: block;
+        z-index: 1;
+      }
+
+      .projectInfo {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        width: 200px;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        z-index: 2;
+        padding: 15px;
+
+        h2 {
+          font-size: 1.2rem;
+          font-weight: 400;
+          margin: 0 0 8px 0;
+        }
+
+        .projectMeta {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.9rem;
+          color: #777;
+        }
+      }
+    }
+  }
+}
