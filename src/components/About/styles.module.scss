@@ -6,17 +6,18 @@
   color: #141516;
   background-color: #ffffff;
   z-index: 1;
-  h2{
-    font-size: 2rem;
-    font-weight: 400;
-    margin: 0 0 1rem 0;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem; // większy odstęp pod nagłówkiem
   }
   .about {
     display: flex;
-    align-content: center;
+    align-items: center; // wyśrodkowanie w pionie
+    justify-content: center; // wyśrodkowanie w poziomie
     padding: 120px;
     background-color: #ffffff;
-    gap: 100px;
+    gap: 150px; // zwiększony odstęp między elementami
   }
 
   .aboutContainer {
@@ -43,10 +44,13 @@
     max-width: 800px;
     font-size: 1.2rem;
     line-height: 1.5;
-     p {
-       max-width: 580px;
-
-     }
+    p {
+      max-width: 580px;
+      margin: 0 auto 1.5rem; // wycentrowanie paragrafów i większy odstęp
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
 

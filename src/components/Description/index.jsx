@@ -7,13 +7,11 @@ import Link from "next/link";
 export default function Description() {
 
   const phrase =
-    "Helping brands stand out in the digital era with cutting-edge \n" +
-      "visual representati\n" +
-      " ons, that capture attention and inspire action. \n" +
-      "Together, we will make a dierence and engage your potential \n" +
+      "Helping brands stand out in the digital era with cutting-edge \n" +
+      "visual representation, that capture attention and inspire action. \n" +
+      "Together, we will make a difference and engage your potential \n" +
       "clients. Many years of experience in this field give us a unique \n" +
-      "position to transform your idea into bold, innovative storytel\n" +
-      " ling.";
+      "position to transform your idea into bold, innovative storytelling.";
   const description = useRef(null);
   const isInView = useInView(description, {
         threshold: 0.5,
