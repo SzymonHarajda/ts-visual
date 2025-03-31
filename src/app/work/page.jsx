@@ -9,7 +9,7 @@ const projects = [
   {
     title: "Plac Uni",
     category: "Interior",
-    image: "/small/cam_1.jpg",
+    image: "/small/cam_5.jpg",
     slug: "plac-uni",
     type: "small"
   },
@@ -30,7 +30,7 @@ const projects = [
   {
     title: "Arlon 53",
     category: "Architecture",
-    image: "/Arlon/10th_floor.jpg",
+    image: "/Arlon/cam_1.jpg",
     slug: "arlon-53",
     type: "big"
   },

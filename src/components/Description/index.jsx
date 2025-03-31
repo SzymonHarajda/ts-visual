@@ -15,35 +15,36 @@ export default function Description() {
       "position to transform your idea into bold, innovative storytel\n" +
       " ling.";
   const description = useRef(null);
-  const isInView = useInView(description);
+  const isInView = useInView(description, {
+        threshold: 0.5,
+        once: false
+    });
 
   return (
     <div ref={description} className={styles.description}>
       <div className={styles.body}>
-        <p>
-          {phrase.split(" ").map((word, index) => {
-            return (
-              <span key={index} className={styles.mask}>
-                <motion.span
-                  variants={slideUp}
-                  custom={index}
-                  animate={isInView ? "open" : "closed"}
-                  key={index}
-                >
-                  {word}
-                </motion.span>
-              </span>
-            );
-          })}
-        </p>
+          <p>
+              {phrase.split(" ").map((word, index) => (
+                  <span key={index} className={styles.mask}>
+      <motion.span
+          layout
+          variants={slideUp}
+          custom={index}
+          animate={isInView ? "open" : "closed"}
+      >
+        {word}
+      </motion.span>
+    </span>
+              ))}
+          </p>
 
-        <div data-scroll data-scroll-speed={0.1}>
           <Link href={"/about"}>
+        <div data-scroll data-scroll-speed={0.1}>
               <Rounded className={styles.button}>
               <p>About</p>
             </Rounded>
-          </Link>
         </div>
+          </Link>
       </div>
     </div>
   );
