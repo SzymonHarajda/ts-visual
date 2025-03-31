@@ -1,0 +1,95 @@
+.projectPage {
+  padding: 120px 5vw;
+
+  .projectHeader {
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+    }
+
+    .description {
+      max-width: 800px;
+      background-color: white;
+      padding: 30px;
+
+      p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  }
+  .portraitRow {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .projectImages {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+
+    .landscapeRow {
+      display: flex;
+      gap: 2vw;
+      height: 50vh;
+    }
+
+    .landscapeContainer {
+      position: relative;
+      width: 50%;
+      height: 100%;
+    }
+
+    .imageContainer {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+
+      &.portraitContainer {
+        width: 50%;
+        height: 120vh;
+        margin: 0 auto;
+      }
+
+      .projectImage {
+        object-fit: cover;
+      }
+    }
+
+    }
+  .relativeContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .overlayTile {
+    position: absolute;
+    bottom: 2rem;   // Odstęp od dołu – dostosuj wg potrzeb
+    left: 2rem;     // Odstęp od lewej krawędzi
+    max-width: 320px;  // Przykładowa szerokość kafelka
+    background-color: #fff;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    z-index: 10;
+
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+  }
+}

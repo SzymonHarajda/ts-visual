@@ -1,8 +1,9 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import { useScroll, useTransform, motion } from "framer-motion";
+import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
 
 const About = () => {
   const container = useRef(null);
@@ -13,7 +14,15 @@ const About = () => {
   });
 
   const height = useTransform(scrollYProgress, [0, 0.9], [50, 0]);
+  useEffect(() => {  const timer = setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant" // Use "instant" instead of "smooth" to avoid animation issues
+    });
+  }, 100);
 
+    return () => clearTimeout(timer);}, []);
+  useLocomotiveScroll();
   return (
     <>
       <div ref={container} className={styles.aboutPage}>

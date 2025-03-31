@@ -3,63 +3,51 @@ import styles from "./page.module.scss";
 import WorkProject from "./components/WorkProject";
 import { useRef } from "react";
 import Header from "@/components/Header";
+import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
 
 const projects = [
   {
-    title: "Small Apartment",
+    title: "Plac Uni",
     category: "Interior",
-    year: "2023",
     image: "/small/cam_1.jpg",
-    slug: "small-apartment",
+    slug: "plac-uni",
     type: "small"
   },
   {
-    title: "Grano Apartments",
-    category: "Architecture",
-    year: "2022",
+    title: "Grano Residence",
+    category: "Interior",
     image: "/grano/CAM_1.jpg",
-    slug: "grano-apartments",
+    slug: "grano-residence",
     type: "small"
   },
   {
-    title: "Modern Cabin",
-    category: "Interior",
-    year: "2023",
+    title: "Masurian Cabi",
+    category: "Architecture",
     image: "/modern/cam_1.jpg",
-    slug: "modern-cabin",
+    slug: "masurian-cabi",
     type: "small"
   },
   {
-    title: "Small Apartment",
-    category: "Interior",
-    year: "2023",
-    image: "/small/cam_1.jpg",
-    slug: "small-apartment",
+    title: "Arlon 53",
+    category: "Architecture",
+    image: "/Arlon/10th_floor.jpg",
+    slug: "arlon-53",
     type: "big"
   },
   {
-    title: "Small Apartment",
-    category: "Interior",
-    year: "2023",
-    image: "/small/cam_1.jpg",
-    slug: "small-apartment",
-    type: "small"
-  },
-  {
-    title: "Grano Apartments",
+    title: "Souverain 100",
     category: "Architecture",
-    year: "2022",
-    image: "/grano/CAM_1.jpg",
-    slug: "grano-apartments",
-    type: "small"
+    image: "/Souverain/cam_1.jpg",
+    slug: "souverain-100",
+    type: "big"
   },
-  // Add type to rest of projects (alternating between small and big)
-  // ...
+
+
 ];
 
 export default function Work() {
   const containerRef = useRef(null);
-
+  useLocomotiveScroll();
   // Group projects into rows
   const rows = [];
   let currentRow = [];

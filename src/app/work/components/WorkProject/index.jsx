@@ -22,20 +22,19 @@ export default function WorkProject({ project }) {
                     onMouseLeave={() => setIsHovered(false)}
                     className={styles.imageContainer}
                 >
-                    <motion.div
+                    <div
                         className={styles.imageWrapper}
-                        animate={{ scale: isHovered ? 1.05 : 1 }}
-                        transition={{ duration: 0.5 }}
                     >
                         <Image
                             src={project.image}
                             alt={project.title}
                             fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
+                            quality={100}
+                            sizes={project.type === "big" ? "100vw" : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"}
                             className={styles.projectImage}
                             priority
                         />
-                    </motion.div>
+                    </div>
 
                     <div className={styles.projectInfo}>
                         <h2>{project.title}</h2>

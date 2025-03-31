@@ -5,6 +5,7 @@ import { slideUp, opacity } from "./animation";
 import Rounded from "../../common/RoundedButton";
 import Link from "next/link";
 export default function Description() {
+
   const phrase =
     "Helping brands stand out in the digital era with cutting-edge \n" +
       "visual representati\n" +
@@ -39,7 +40,6 @@ export default function Description() {
         <div data-scroll data-scroll-speed={0.1}>
           <Link href={"/about"}>
               <Rounded className={styles.button}>
-
               <p>About</p>
             </Rounded>
           </Link>

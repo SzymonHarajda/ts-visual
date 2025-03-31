@@ -7,6 +7,7 @@ import Rounded from "../../common/RoundedButton";
 import Magnetic from "../../common/Magnetic";
 import Header from "../../components/Header";
 import emailjs from "emailjs-com";
+import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
 
 export default function Contact() {
   const container = useRef(null);
@@ -67,7 +68,7 @@ export default function Contact() {
       new LocomotiveScroll();
     })();
   }, []);
-
+  useLocomotiveScroll();
   return (
     <>
       <Header />
