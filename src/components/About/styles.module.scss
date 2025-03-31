@@ -6,10 +6,9 @@
   color: #141516;
   background-color: #ffffff;
   z-index: 1;
-
   h2 {
     text-align: center;
-    margin-bottom: 2rem; // większy odstęp pod nagłówkiem
+    margin-bottom: 1rem; // większy odstęp pod nagłówkiem
   }
   .about {
     display: flex;
@@ -43,7 +42,9 @@
   .aboutText {
     max-width: 800px;
     font-size: 1.2rem;
-    line-height: 1.5;
+    line-height: 1.6; // zwiększony odstęp między liniami
+    text-align: center;
+
     p {
       max-width: 580px;
       margin: 0 auto 1.5rem; // wycentrowanie paragrafów i większy odstęp
