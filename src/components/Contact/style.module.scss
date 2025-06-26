@@ -64,8 +64,21 @@
           z-index: 2;
           position: relative;
         }
+        @media screen and (max-width: 1200px) {
+          width: 120px;
+          height: 120px;
+          border-radius: 60px;
+          p {
+            font-size: 14px;
+          }
+        }
       }
       svg {
+        position: absolute;
+        top: 30%;
+        left: 100%;
+      }
+      .staticSvg {
         position: absolute;
         top: 30%;
         left: 100%;
@@ -126,6 +139,93 @@
           cursor: default;
           font-weight: 300;
           font-size: 1em;
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .contact {
+    .body {
+      flex-direction: column;
+      gap: 24px;
+      padding-top: 100px;
+      .title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        margin-right: 20px;
+        
+        .buttonContainer {
+          position: static;
+          margin: 24px auto 0 auto;
+          left: auto;
+          top: auto;
+          width: 60%;
+          
+          // Specyficzny selektor dla przycisku Get in touch
+          :global(.roundedButton) {
+            width: 120px !important;
+            height: 120px !important;
+            border-radius: 60px !important;
+            
+            p {
+              font-size: 14px;
+            }
+          }
+        }
+        
+        svg, .staticSvg {
+          display: none;
+        }
+      }
+        
+      .nav {
+        flex-direction: column;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 60%;
+        gap: 20px;
+        
+        > div {
+          width: 100%;
+          text-align: center;
+          
+          p {
+            font-size: 14px;
+          }
+        }
+      }
+      .info {
+        align-items: center;
+        margin-top: 50px;
+        padding: 20px;
+        
+        div {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          
+          p, h3 {
+            font-size: 14px;
+          }
+          
+          a {
+            text-decoration: none;
+            color: white;
+          }
+          
+          span {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+          }
         }
       }
     }

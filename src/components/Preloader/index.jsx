@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { opacity, slideUp } from "./anim";
 import Image from "next/image";
 
-export default function Preloader() {
+export default function Preloader({ onFinish }) {
   const [progress, setProgress] = useState(0);
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
 
@@ -20,6 +20,7 @@ export default function Preloader() {
       setProgress((prevProgress) => {
         if (prevProgress >= 100) {
           clearInterval(interval);
+          if (onFinish) onFinish();
           return 100; // Upewnij się, że progres nie przekroczy 100%
         }
         return prevProgress + 1; // Progres wzrasta co 1%
@@ -27,7 +28,7 @@ export default function Preloader() {
     }, 50); // Czas między krokami animacji
 
     return () => clearInterval(interval); // Sprzątanie po zakończeniu
-  }, []);
+  }, [onFinish]);
 
   // Ścieżki SVG dla animacji
   const initialPath = `M0 0 L${dimension.width} 0 L${dimension.width} ${

@@ -7,6 +7,7 @@ import Link from "./Link";
 import Curve from "./Curve";
 
 const navItems = [
+  
   {
     title: "Home",
     href: "/",

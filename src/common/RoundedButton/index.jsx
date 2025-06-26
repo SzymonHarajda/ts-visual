@@ -7,12 +7,15 @@ import Magnetic from "../Magnetic";
 export default function Rounded({
   children,
   backgroundColor = "#2c2e32",
+  noMagnetic = false,
+  noAnim = false,
   ...attributes
 }) {
   const circle = useRef(null);
   let timeline = useRef(null);
   let timeoutId = null;
   useEffect(() => {
+    if (noAnim) return;
     timeline.current = gsap.timeline({ paused: true });
     timeline.current
       .to(
@@ -25,7 +28,7 @@ export default function Rounded({
         { top: "-150%", width: "125%", duration: 0.25 },
         "exit"
       );
-  }, []);
+  }, [noAnim]);
 
   const manageMouseEnter = () => {
     if (timeoutId) clearTimeout(timeoutId);
@@ -38,26 +41,29 @@ export default function Rounded({
     }, 300);
   };
 
-  return (
-    <Magnetic>
-      <div
-        className={styles.roundedButton}
-        style={{ overflow: "hidden" }}
-        onMouseEnter={() => {
-          manageMouseEnter();
-        }}
-        onMouseLeave={() => {
-          manageMouseLeave();
-        }}
-        {...attributes}
-      >
-        {children}
+  const ButtonContent = (
+    <div
+      className={styles.roundedButton}
+      style={{ overflow: "hidden" }}
+      {...(!noAnim && {
+        onMouseEnter: manageMouseEnter,
+        onMouseLeave: manageMouseLeave,
+      })}
+      {...attributes}
+    >
+      {children}
+      {!noAnim && (
         <div
           ref={circle}
           style={{ backgroundColor }}
           className={styles.circle}
         ></div>
-      </div>
-    </Magnetic>
+      )}
+    </div>
   );
+
+  if (noMagnetic) {
+    return ButtonContent;
+  }
+  return <Magnetic>{ButtonContent}</Magnetic>;
 }

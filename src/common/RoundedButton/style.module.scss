@@ -27,4 +27,38 @@
   position: absolute;
   border-radius: 50%;
   top: 100%;
+  @media screen and (max-width: 1200px) {
+    width: 0%;
+    height: 0%;
+    top: 0;
+  }
 }
+
+@media (max-width: 1200px) {
+  .roundedButton {
+    p {
+      font-size: 20px !important;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .roundedButton {
+    p {
+      font-size: 16px !important;
+    }
+  }
+}
+
+// @media (max-width: 1200px) {
+//   .roundedButton {
+//     width: 60%;
+//     height: 56px;
+//     border-radius: 28px;
+//     padding: 0 0;
+//     font-size: 18px;
+//     p {
+//       font-size: 18px;
+//     }
+//   }
+  
+// }

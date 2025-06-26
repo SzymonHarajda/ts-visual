@@ -15,8 +15,19 @@ import Link from "next/link";
 export default function Header() {
   const header = useRef(null);
   const [isActive, setIsActive] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
   const button = useRef(null);
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -26,6 +37,7 @@ export default function Header() {
         start: 0,
         end: window.innerHeight / 2,
         onLeave: () => {
+          setShowButton(true);
           gsap.to(button.current, {
             scale: 1,
             duration: 0.25,
@@ -33,6 +45,7 @@ export default function Header() {
           });
         },
         onEnterBack: () => {
+          setShowButton(false);
           gsap.to(
             button.current,
             { scale: 0, duration: 0.25, ease: "power1.out" },
@@ -48,7 +61,6 @@ export default function Header() {
       <div ref={header} className={styles.header}>
         <div className={styles.logo}>
           <p className={styles.copyright}>©</p>
-
         </div>
 
         <div className={styles.centerLogo}>
@@ -63,64 +75,73 @@ export default function Header() {
         </div>
 
         <div className={styles.nav}>
-          <Magnetic>
-            <div
-                className={`${styles.el} ${
-                    pathname === "/" ? styles.elActive : ""
-                }`}
-            >
-              <Link href="/">Home</Link>
-              <div className={styles.indicator}></div>
-            </div>
-          </Magnetic>
-          <Magnetic>
-            <div
-              className={`${styles.el} ${
-                pathname === "/work" ? styles.elActive : ""
-              }`}
-            >
-              <Link href="/work">Work</Link>
-              <div className={styles.indicator}></div>
-            </div>
-          </Magnetic>
-          <Magnetic>
-            <div
-              className={`${styles.el} ${
-                pathname === "/about" ? styles.elActive : ""
-              }`}
-            >
-              <Link href="/about">About</Link>
-              <div className={styles.indicator}></div>
-            </div>
-          </Magnetic>
-          <Magnetic>
-            <div
-              className={`${styles.el} ${
-                pathname === "/contact" ? styles.elActive : ""
-              }`}
-            >
-              <Link href="/contact">Contact</Link>
-              <div className={styles.indicator}></div>
-            </div>
-          </Magnetic>
+          {isMobile ? (
+            <Magnetic>
+              <div
+                className={styles.el}
+                onClick={() => setIsActive(true)}
+                style={{ userSelect: "none" }}
+              >
+                <a>Menu</a>
+                <div className={styles.indicator}></div>
+              </div>
+            </Magnetic>
+          ) : (
+            <>
+              <Magnetic>
+                <div
+                  className={`${styles.el} ${pathname === "/" ? styles.elActive : ""}`}
+                >
+                  <Link href="/">Home</Link>
+                  <div className={styles.indicator}></div>
+                </div>
+              </Magnetic>
+              <Magnetic>
+                <div
+                  className={`${styles.el} ${pathname === "/work" ? styles.elActive : ""}`}
+                >
+                  <Link href="/work">Work</Link>
+                  <div className={styles.indicator}></div>
+                </div>
+              </Magnetic>
+              <Magnetic>
+                <div
+                  className={`${styles.el} ${pathname === "/about" ? styles.elActive : ""}`}
+                >
+                  <Link href="/about">About</Link>
+                  <div className={styles.indicator}></div>
+                </div>
+              </Magnetic>
+              <Magnetic>
+                <div
+                  className={`${styles.el} ${pathname === "/contact" ? styles.elActive : ""}`}
+                >
+                  <Link href="/contact">Contact</Link>
+                  <div className={styles.indicator}></div>
+                </div>
+              </Magnetic>
+            </>
+          )}
         </div>
       </div>
 
-      <div ref={button} className={styles.headerButtonContainer}>
-        <Rounded
-          backgroundColor="#535762"
-          onClick={() => {
-            setIsActive(!isActive);
-          }}
-          className={`${styles.button}`}
-        >
-          <div
-            className={`${styles.burger} ${
-              isActive ? styles.burgerActive : ""
-            }`}
-          ></div>
-        </Rounded>
-      </div>
+      {(showButton || isActive) && (
+        <div ref={button} className={styles.headerButtonContainer} style={{ transform: 'scale(1)' }}>
+          <Rounded
+            backgroundColor="#535762"
+            onClick={() => {
+              setIsActive(!isActive);
+            }}
+            className={`${styles.button}`}
+          >
+            <div
+              className={`${styles.burger} ${
+                isActive ? styles.burgerActive : ""
+              }`}
+            ></div>
+          </Rounded>
+        </div>
+      )}
 
       <AnimatePresence mode="wait">{isActive && <Nav />}</AnimatePresence>
     </>

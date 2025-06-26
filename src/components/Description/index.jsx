@@ -37,11 +37,11 @@ export default function Description() {
           </p>
 
           <Link href={"/about"}>
-        <div data-scroll data-scroll-speed={0.1}>
-              <Rounded className={styles.button}>
-              <p>About</p>
-            </Rounded>
-        </div>
+            <div data-scroll data-scroll-speed={0.1}>
+                <Rounded className={styles.button}>
+                    <p>About</p>
+                </Rounded>
+            </div>
           </Link>
       </div>
     </div>

@@ -60,6 +60,15 @@
           position: relative;
           z-index: 1;
         }
+        @media screen and (max-width: 1200px) {
+          width: 120px;
+          height: 120px;
+          border-radius: 60px;
+          p {
+            font-size: 14px;
+          }
+        }
+       
       }
     }
   }
@@ -67,5 +76,47 @@
     padding: 20px;
     border-radius: 40px;
     border: 1px solid grey;
+  }
+}
+
+// MOBILE STYLES
+@media (max-width: 1200px) {
+  .description {
+    
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-top: 60px;
+    .body {
+      flex-direction: column;
+      gap: 24px;
+      p {
+        max-width: 100%;
+        font-size: 18px !important;
+        line-height: 1.5;
+      }
+      a {
+        .button {
+          position: static;
+          width: 120px;
+          height: 120px;
+          border-radius: 60px;
+          font-size: 18px;
+          margin: 24px auto 0 auto;
+          p {
+            font-size: 14px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .description {
+    .body {
+      p {
+        font-size: 20px !important;
+      }
+    }
   }
 }
