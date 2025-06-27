@@ -6,88 +6,132 @@ const videoSrc = "/test/landing_vod.mp4";
 
 export default function Landing() {
   const [isClient, setIsClient] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
     setIsClient(true);
-    // Detect mobile devices
-    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
   }, []);
 
   useEffect(() => {
-    if (videoRef.current && isClient) {
-      const video = videoRef.current;
+    if (!videoRef.current || !isClient) return;
 
-      // Force play attempt for mobile devices
-      const attemptPlay = async () => {
+    const video = videoRef.current;
+    let hasTriedAutoplay = false;
+
+    // Funkcja do próby uruchomienia video
+    const tryPlayVideo = async () => {
+      if (hasTriedAutoplay) return;
+      hasTriedAutoplay = true;
+
+      try {
+        // Ustaw volume na 0 dla pewności
+        video.volume = 0;
+        video.muted = true;
+
+        await video.play();
+        console.log("Video started successfully");
+      } catch (error) {
+        console.log("Autoplay failed, setting up interaction listeners:", error);
+        setupInteractionListeners();
+      }
+    };
+
+    // Event listeners dla interakcji użytkownika
+    const setupInteractionListeners = () => {
+      const events = ["touchstart", "touchend", "mousedown", "keydown", "scroll"];
+
+      const playOnInteraction = async (e) => {
         try {
+          video.muted = true;
+          video.volume = 0;
           await video.play();
-        } catch (error) {
-          console.log("Autoplay prevented, waiting for user interaction:", error);
+          console.log("Video started after user interaction");
 
-          // Add event listeners for user interaction (niewidoczne dla użytkownika)
-          const playOnInteraction = () => {
-            video.play().catch((e) => console.log("Play failed:", e));
-            document.removeEventListener("touchstart", playOnInteraction);
-            document.removeEventListener("click", playOnInteraction);
-            document.removeEventListener("scroll", playOnInteraction);
-          };
-
-          // Dodaj więcej eventów dla lepszego pokrycia
-          document.addEventListener("touchstart", playOnInteraction, { once: true });
-          document.addEventListener("click", playOnInteraction, { once: true });
-          document.addEventListener("scroll", playOnInteraction, { once: true });
+          // Usuń wszystkie event listenery
+          events.forEach((event) => {
+            document.removeEventListener(event, playOnInteraction);
+            window.removeEventListener(event, playOnInteraction);
+          });
+        } catch (err) {
+          console.log("Failed to play video on interaction:", err);
         }
       };
 
-      if (videoLoaded) {
-        attemptPlay();
-      }
+      // Dodaj event listenery
+      events.forEach((event) => {
+        document.addEventListener(event, playOnInteraction, {
+          once: true,
+          passive: true,
+        });
+        window.addEventListener(event, playOnInteraction, {
+          once: true,
+          passive: true,
+        });
+      });
+
+      // Cleanup function
+      return () => {
+        events.forEach((event) => {
+          document.removeEventListener(event, playOnInteraction);
+          window.removeEventListener(event, playOnInteraction);
+        });
+      };
+    };
+
+    // Próbuj odtworzyć gdy video jest gotowe
+    if (videoReady) {
+      // Małe opóźnienie dla pewności
+      setTimeout(tryPlayVideo, 100);
     }
-  }, [isClient, videoLoaded]);
+
+    return setupInteractionListeners();
+  }, [isClient, videoReady]);
 
   const handleVideoError = (e) => {
-    console.error(`Error loading or playing video: ${videoSrc}`, e);
+    console.error(`Error loading video: ${videoSrc}`, e);
   };
 
   const handleVideoLoaded = () => {
-    setVideoLoaded(true);
+    console.log("Video loaded");
+    setVideoReady(true);
   };
 
   const handleVideoCanPlay = () => {
-    if (videoRef.current) {
-      // Próba odtworzenia dla wszystkich urządzeń
-      videoRef.current.play().catch((e) => console.log("Autoplay blocked:", e));
+    console.log("Video can play");
+    if (!videoReady) {
+      setVideoReady(true);
     }
   };
+
+  if (!isClient) return null;
 
   return (
     <main className={styles.main}>
       <div className={styles.videoWrapper}>
-        {isClient && (
-          <video
-            ref={videoRef}
-            className={styles.backgroundVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            onError={handleVideoError}
-            onLoadedData={handleVideoLoaded}
-            onCanPlay={handleVideoCanPlay}
-            webkit-playsinline="true"
-            x5-playsinline="true"
-            x5-video-player-type="h5"
-            x5-video-player-fullscreen="true"
-            controls={false}
-          >
-            <source src={videoSrc} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        )}
+        <video
+          ref={videoRef}
+          className={styles.backgroundVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          onError={handleVideoError}
+          onLoadedData={handleVideoLoaded}
+          onCanPlay={handleVideoCanPlay}
+          onLoadedMetadata={() => console.log("Metadata loaded")}
+          webkit-playsinline="true"
+          x5-playsinline="true"
+          x5-video-player-type="h5"
+          x5-video-player-fullscreen="true"
+          controls={false}
+          disablePictureInPicture
+          style={{ pointerEvents: "none" }}
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </main>
   );
