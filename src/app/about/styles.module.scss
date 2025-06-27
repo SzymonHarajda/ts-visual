@@ -1,7 +1,26 @@
 .aboutPageMain {
+  overflow-y: hidden;
   background-color: #ffffff;
+  min-height: 100vh;
+
   .separator {
     background-color: #ffffff;
     padding: 100px 0 100px 0;
+  }
+
+  // Media queries dla responsywności
+  @media (max-width: 1200px) {
+    overflow-y: hidden;
+    .separator {
+      padding: 60px 0 40px 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    overflow-y: hidden;
+
+    .separator {
+      padding: 40px 0 20px 0;
+    }
   }
 }

@@ -6,8 +6,11 @@
   justify-content: center;
   background-color: #141516;
   position: relative;
+  height: 100dvh;
+  overflow-y: auto;
+
   .body {
-    padding-top: 100px;
+    padding-top: 150px; /* Zwiększony padding żeby zdjęcie nie wchodziło w navbar */
     width: 100%;
     max-width: 1800px;
     background-color: #141516;
@@ -32,18 +35,27 @@
         position: relative;
       }
     }
+
+    @media (max-width: 1200px) {
+      padding-top: 120px; /* Więcej paddingu na mobile */
+      flex-direction: column;
+      align-items: center;
+    }
+
     @media (max-width: 768px) {
-      padding-top: 100px;
+      padding-top: 100px; /* Jeszcze więcej paddingu na małych ekranach */
       flex-direction: column;
       align-items: center;
     }
   }
+
   .title {
     border-bottom: 1px solid rgb(134, 134, 134);
     padding-bottom: 100px;
     margin-left: 200px;
     margin-right: 200px;
     position: relative;
+
     span {
       display: flex;
       align-items: center;
@@ -53,6 +65,7 @@
         position: relative;
         border-radius: 50%;
         overflow: hidden;
+        margin-top: 20px; /* Dodatkowy margin dla zdjęcia */
 
         img {
           object-fit: cover;
@@ -62,16 +75,19 @@
         margin-left: 0.3em;
       }
     }
+
     h2 {
       font-size: 5vw;
       margin: 0px;
       font-weight: 300;
     }
+
     .buttonContainer {
       position: absolute;
       left: calc(100% - 500px);
       top: calc(100% - 75px);
     }
+
     .button {
       width: 180px;
       height: 180px;
@@ -92,22 +108,85 @@
         position: relative;
       }
     }
+
     svg {
       position: absolute;
       top: 25%;
       left: 90%;
-      @media (max-width: 768px) {
-        display: none;
+    }
+
+    /* Responsywność dla ekranów < 1200px */
+    @media (max-width: 1200px) {
+      margin-left: 40px;
+      margin-right: 40px;
+      padding-bottom: 80px;
+      text-align: center;
+
+      span {
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+
+        .imageContainer {
+          margin: 20px auto 0 auto; /* Zwiększony margin dla mobile */
+          width: 80px;
+          height: 80px;
+        }
+
+        h2 {
+          margin-left: 0;
+          font-size: 6vw;
+          line-height: 1.2;
+        }
+      }
+
+      h2 {
+        font-size: 6vw;
+      }
+
+      .buttonContainer {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        margin-top: 40px;
+        width: 140px; /* Dodaj szerokość dla lepszego wyśrodkowania */
+
+        .button {
+          width: 140px;
+          height: 140px;
+          position: relative;
+          left: 0; /* Reset pozycji */
+
+          p {
+            font-size: 14px;
+          }
+        }
+      }
+
+      svg {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        top: auto;
+        margin-top: 20px;
       }
     }
+
+    /* Responsywność dla ekranów < 768px */
     @media (max-width: 768px) {
       margin-left: 20px;
       margin-right: 20px;
-      padding-bottom: 100px;
-      text-align: center;
+      padding-bottom: 60px;
 
-      .imageContainer {
-        margin: 0 auto;
+      span {
+        .imageContainer {
+          margin: 30px auto 0 auto; /* Jeszcze więcej marginu na małych ekranach */
+        }
+
+        h2 {
+          font-size: 8vw;
+        }
       }
 
       h2 {
@@ -115,83 +194,59 @@
       }
 
       .buttonContainer {
-        left: 50%;
-        transform: translateX(-50%);
-        top: calc(100% - 50px);
+        width: 120px; /* Zmniejsz szerokość kontenera */
+
+        .button {
+          width: 120px;
+          height: 120px;
+
+          p {
+            font-size: 12px;
+          }
+        }
       }
 
       svg {
-        left: 50%;
-        transform: translateX(-50%);
-        top: 75%;
+        display: none;
       }
     }
   }
+
+  /* NAV - Responsywność - wyśrodkowanie guzików */
   .nav {
     display: flex;
     gap: 20px;
     margin-top: 100px;
     margin-left: 200px;
     margin-right: 200px;
-  }
 
-  /* FORMULARZ */
-  .contactForm {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-top: 100px;
-
-    .formGroup {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-
-      label {
-        font-size: 0.9rem;
-        color: #fff;
-        text-transform: uppercase;
-      }
-      input,
-      textarea {
-        background-color: #2a2a2a;
-        border: none;
-        outline: none;
-        color: #fff;
-        padding: 0.75rem 1rem;
-        border-radius: 4px;
-        font-size: 1rem;
-      }
-      .styledInput {
-        background-color: transparent;
-        border: none;
-        border-bottom: 2px solid #535762;
-        border-radius: 0;
-        transition: border-color 0.2s ease;
-        &:focus {
-          border-color: #ffffff;
-        }
-      }
+    @media (max-width: 1200px) {
+      margin-left: 40px;
+      margin-right: 40px;
+      margin-top: 60px;
+      justify-content: center; /* Wyśrodkowanie guzików */
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
-    .statusMessage {
-      margin-top: 1rem;
-      font-weight: 600;
-      color: white; // green color
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-    }
     @media (max-width: 768px) {
       margin-left: 20px;
       margin-right: 20px;
-      margin-top: 50px;
+      margin-top: 40px;
+      flex-direction: column;
+      align-items: center; /* Wyśrodkowanie w kolumnie */
+      gap: 10px;
+
+      /* Upewnij się że każdy guzik nav jest wyśrodkowany */
+      & > * {
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+      }
     }
   }
 
-  /* INFORMACJE NA DOLE */
+  /* INFO - Responsywność - wyśrodkowanie */
   .info {
     display: flex;
     justify-content: space-between;
@@ -209,10 +264,12 @@
         padding: 2.5px;
         cursor: pointer;
       }
+
       a {
         text-decoration: none;
         color: white;
       }
+
       p {
         &::after {
           content: "";
@@ -232,11 +289,14 @@
           }
         }
       }
+
       span {
         display: flex;
         flex-direction: column;
         gap: 15px;
+        align-items: center; /* Wyśrodkuj elementy w span */
       }
+
       h3 {
         color: grey;
         cursor: default;
@@ -244,14 +304,119 @@
         font-size: 1em;
       }
     }
+
+    @media (max-width: 1200px) {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      text-align: center;
+
+      div {
+        justify-content: center; /* Wyśrodkowanie każdego div */
+
+        span {
+          gap: 15px;
+          flex-direction: column;
+          align-items: center; /* Wyśrodkuj elementy */
+        }
+
+        h3 {
+          font-size: 0.9rem;
+        }
+
+        p {
+          font-size: 0.85rem;
+        }
+      }
+    }
+
     @media (max-width: 768px) {
-      flex-direction: column;
-      align-items: center;
-      margin-left: 20px;
-      margin-right: 20px;
+      gap: 40px;
     }
   }
 
+  /* FORMULARZ - Responsywność */
+  .contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 100px;
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      label {
+        font-size: 0.9rem;
+        color: #fff;
+        text-transform: uppercase;
+      }
+
+      input,
+      textarea {
+        background-color: #2a2a2a;
+        border: none;
+        outline: none;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+
+      .styledInput {
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid #535762;
+        border-radius: 0;
+        transition: border-color 0.2s ease;
+        padding: 12px 0;
+
+        &:focus {
+          border-color: #ffffff;
+        }
+      }
+    }
+
+    .statusMessage {
+      margin-top: 1rem;
+      font-weight: 600;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    @media (max-width: 1200px) {
+      margin-left: 40px;
+      margin-right: 40px;
+      margin-top: 60px;
+      gap: 1.2rem;
+
+      .formGroup {
+        gap: 0.8rem;
+
+        label {
+          font-size: 0.8rem;
+        }
+
+        .styledInput {
+          font-size: 0.9rem;
+          padding: 10px 0;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 40px;
+    }
+  }
+
+  /* CONTACT DETAILS - Responsywność */
   .contactDetails {
     position: absolute;
     right: -150px;
@@ -271,10 +436,42 @@
       margin: 0;
       font-size: 1rem;
     }
-    @media (max-width: 768px) {
+
+    @media (max-width: 1200px) {
       position: static;
-      margin-top: 50px;
+      margin-top: 40px;
       text-align: center;
+
+      h3 {
+        font-size: 1.3rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
     }
+
+    @media (max-width: 768px) {
+      margin-top: 30px;
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  /* Ogólne zmiany dla mobile */
+  @media (max-width: 1200px) {
+    height: auto;
+    min-height: 100dvh;
+    padding-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    padding-bottom: 20px;
   }
 }

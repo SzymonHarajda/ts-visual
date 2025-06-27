@@ -7,42 +7,40 @@ import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
 
 const projects = [
   {
+    title: "Arlon 53",
+    category: "Architecture",
+    image: "/Arlon/cam_1.jpg",
+    slug: "arlon-53",
+    type: "big",
+  },
+  {
     title: "Plac Uni",
     category: "Interior",
     image: "/small/cam_5.jpg",
     slug: "plac-uni",
-    type: "small"
+    type: "small",
   },
   {
     title: "Grano Residence",
     category: "Interior",
     image: "/grano/CAM_1.jpg",
     slug: "grano-residence",
-    type: "small"
+    type: "small",
   },
   {
-    title: "Masurian Cabi",
+    title: "Masurian Cabin",
     category: "Architecture",
     image: "/modern/cam_1.jpg",
-    slug: "masurian-cabi",
-    type: "small"
-  },
-  {
-    title: "Arlon 53",
-    category: "Architecture",
-    image: "/Arlon/cam_1.jpg",
-    slug: "arlon-53",
-    type: "big"
+    slug: "masurian-cabin",
+    type: "small",
   },
   {
     title: "Souverain 100",
     category: "Architecture",
     image: "/Souverain/cam_1.jpg",
     slug: "souverain-100",
-    type: "big"
+    type: "big",
   },
-
-
 ];
 
 export default function Work() {
@@ -53,14 +51,16 @@ export default function Work() {
   let currentRow = [];
   let currentRowWidth = 0;
 
-  projects.forEach(project => {
+  projects.forEach((project) => {
     const isSmall = project.type === "small";
-    const projectWidth = isSmall ? 1/3 : 1; // Small takes 1/3 width, big takes full width
+    const projectWidth = isSmall ? 1 / 3 : 1; // Small takes 1/3 width, big takes full width
 
     // If adding this project would exceed row width or row is already full
-    if (currentRowWidth + projectWidth > 1 ||
-        (currentRow.length > 0 && !isSmall && currentRow[0].type === "small") ||
-        (currentRow.length > 0 && isSmall && currentRow[0].type === "big")) {
+    if (
+      currentRowWidth + projectWidth > 1 ||
+      (currentRow.length > 0 && !isSmall && currentRow[0].type === "small") ||
+      (currentRow.length > 0 && isSmall && currentRow[0].type === "big")
+    ) {
       // Start a new row
       rows.push([...currentRow]);
       currentRow = [project];
@@ -78,29 +78,33 @@ export default function Work() {
   }
 
   return (
-      <>
-        <Header/>
-        <main className={styles.workPage}>
-          {rows.map((row, rowIndex) => (
-              <div key={rowIndex} className={styles.projectRow}>
-                {row.map((project, projectIndex) => {
-                  const isSmallInSmallGroup = project.type === "small";
-                  const isDoubleWidth = isSmallInSmallGroup && row.length === 2;
+    <>
+      <Header />
+      <main className={styles.workPage}>
+        {rows.map((row, rowIndex) => (
+          <div key={rowIndex} className={styles.projectRow}>
+            {row.map((project, projectIndex) => {
+              const isSmallInSmallGroup = project.type === "small";
+              const isDoubleWidth = isSmallInSmallGroup && row.length === 2;
 
-                  return (
-                      <div
-                          key={projectIndex}
-                          className={`${styles.projectCell} ${project.type === "big" ?
-                              styles.bigCell :
-                              isDoubleWidth ? styles.doubleCell : styles.smallCell}`}
-                      >
-                        <WorkProject project={project} />
-                      </div>
-                  );
-                })}
-              </div>
-          ))}
-        </main>
-      </>
+              return (
+                <div
+                  key={projectIndex}
+                  className={`${styles.projectCell} ${
+                    project.type === "big"
+                      ? styles.bigCell
+                      : isDoubleWidth
+                      ? styles.doubleCell
+                      : styles.smallCell
+                  }`}
+                >
+                  <WorkProject project={project} />
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </main>
+    </>
   );
 }

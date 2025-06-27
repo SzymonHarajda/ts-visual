@@ -184,6 +184,11 @@ export default function Contact() {
                   </a>
                 </p>
               </Magnetic>
+              <Magnetic>
+                <p>
+                  <a href="https://www.instagram.com/tmvisual__/#">Instagram</a>
+                </p>
+              </Magnetic>
             </div>
           </div>
         </div>

@@ -164,11 +164,12 @@
         margin-right: 20px;
 
         .buttonContainer {
-          position: static;
+          position: relative; // Zmień z static na relative
           margin: 24px auto 0 auto;
           left: auto;
           top: auto;
           width: 60%;
+          transform-origin: center; // Dodaj dla stabilności
 
           // Specyficzny selektor dla przycisku Get in touch
           :global(.roundedButton) {
@@ -176,6 +177,7 @@
             height: 120px !important;
 
             border-radius: 60px !important;
+            transition: transform 0.1s ease-out; // Dodaj smooth transition
 
             p {
               font-size: 14px;

@@ -27,7 +27,7 @@ export default function Contact() {
   });
   const x = useTransform(scrollYProgress, [0, 1], [0, 100]);
   const x_mobile = useTransform(scrollYProgress, [0, 1], [-20, 50]);
-  const y = useTransform(scrollYProgress, [0, 1], [-500, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 0]);
 
   const rotate = useTransform(scrollYProgress, [0, 1], [120, 90]);
   return (
