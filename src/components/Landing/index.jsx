@@ -27,15 +27,18 @@ export default function Landing() {
         } catch (error) {
           console.log("Autoplay prevented, waiting for user interaction:", error);
 
-          // Add event listeners for user interaction
+          // Add event listeners for user interaction (niewidoczne dla użytkownika)
           const playOnInteraction = () => {
             video.play().catch((e) => console.log("Play failed:", e));
             document.removeEventListener("touchstart", playOnInteraction);
             document.removeEventListener("click", playOnInteraction);
+            document.removeEventListener("scroll", playOnInteraction);
           };
 
+          // Dodaj więcej eventów dla lepszego pokrycia
           document.addEventListener("touchstart", playOnInteraction, { once: true });
           document.addEventListener("click", playOnInteraction, { once: true });
+          document.addEventListener("scroll", playOnInteraction, { once: true });
         }
       };
 
@@ -54,9 +57,9 @@ export default function Landing() {
   };
 
   const handleVideoCanPlay = () => {
-    if (videoRef.current && isMobile) {
-      // Additional attempt for mobile
-      videoRef.current.play().catch((e) => console.log("Mobile autoplay blocked:", e));
+    if (videoRef.current) {
+      // Próba odtworzenia dla wszystkich urządzeń
+      videoRef.current.play().catch((e) => console.log("Autoplay blocked:", e));
     }
   };
 
@@ -79,6 +82,7 @@ export default function Landing() {
             x5-playsinline="true"
             x5-video-player-type="h5"
             x5-video-player-fullscreen="true"
+            controls={false}
           >
             <source src={videoSrc} type="video/mp4" />
             Your browser does not support the video tag.

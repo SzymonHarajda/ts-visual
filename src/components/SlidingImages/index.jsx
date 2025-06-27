@@ -47,7 +47,7 @@ export default function SlidingImages() {
   const [isStatic, setIsStatic] = useState(false);
 
   useEffect(() => {
-    const check = () => setIsStatic(window.innerWidth <= 1024);
+    const check = () => setIsStatic(window.innerWidth <= 1200);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
@@ -67,13 +67,19 @@ export default function SlidingImages() {
     return (
       <div ref={container} className={styles.slidingImages}>
         <div className={styles.staticSliderWrapper}>
-          {[...slider1.slice(0, 3), ...slider2.slice(0, 3)].map((project, index) => (
-            <div key={index} className={styles.staticProject} style={{ backgroundColor: project.color }}>
-              <div className={styles.staticImageContainer}>
-                <Image fill={true} alt={"image"} src={project.src} />
+          {[...slider1.slice(0, 3), ...slider2.slice(0, 3)].map(
+            (project, index) => (
+              <div
+                key={index}
+                className={styles.staticProject}
+                style={{ backgroundColor: project.color }}
+              >
+                <div className={styles.staticImageContainer}>
+                  <Image fill={true} alt={"image"} src={project.src} />
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       </div>
     );
