@@ -37,19 +37,25 @@
     width: 100vw;
     height: 100vh;
     object-fit: cover;
-    transform: scale(1.15);
-    /* Dodaj fallback dla iOS */
+    /* Usuń transform scale - może powodować problemy z autoplay */
     -webkit-playsinline: true;
+    /* Dodatkowe właściwości dla lepszej kompatybilności mobile */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
   
   .videoWrapper {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
   
   .main {
-    /* Wymuszenie scrollowania na iOS */
     -webkit-overflow-scrolling: touch;
+    /* Prevent zoom on double tap */
+    touch-action: manipulation;
   }
 }
