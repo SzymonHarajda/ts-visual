@@ -30,35 +30,7 @@
   max-height: 100vh;
   max-width: 100vw;
   display: block;
-  transition: opacity 0s ease-in-out;
-}
-
-.videoPlaceholder {
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::after {
-    content: "";
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid white;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  z-index: -10;
 }
 
 @media (max-width: 600px) {
@@ -71,7 +43,6 @@
     /* Dodatkowe właściwości dla lepszej kompatybilności mobile */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
-    will-change: transform;
   }
 
   .videoWrapper {
