@@ -2,60 +2,58 @@
 import { useEffect, useState, useRef } from "react";
 import styles from "./page.module.scss";
 
-const videoSrc = "/test/landing_vod.mp4";
-// Dodaj ścieżkę do obrazka, który będzie plakatem
+const introVideoSrc = "/test/intro.mp4"; // Bardzo lekkie, 1-2 sekundowe intro
+const mainVideoSrc = "/test/landing_vod.mp4"; // Główne video
 const videoPoster = "/test/landing_poster.png";
 
 export default function Landing() {
   const [isClient, setIsClient] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const videoRef = useRef(null);
+  const [currentVideo, setCurrentVideo] = useState("intro"); // "intro" lub "main"
+  const [introCompleted, setIntroCompleted] = useState(false);
+  const introVideoRef = useRef(null);
+  const mainVideoRef = useRef(null);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
-    if (!videoRef.current || !isClient) return;
+    if (!introVideoRef.current || !isClient) return;
 
-    const video = videoRef.current;
+    const introVideo = introVideoRef.current;
     let hasTriedAutoplay = false;
 
-    const tryPlayVideo = async () => {
-      if (hasTriedAutoplay || video.currentTime > 0) return; // Nie próbuj ponownie, jeśli już gra
+    const tryPlayIntro = async () => {
+      if (hasTriedAutoplay) return;
       hasTriedAutoplay = true;
 
       try {
-        video.volume = 0;
-        video.muted = true;
-        await video.play();
-        console.log("Video started successfully");
+        introVideo.volume = 0;
+        introVideo.muted = true;
+        await introVideo.play();
+        console.log("Intro video started successfully");
       } catch (error) {
-        console.log(
-          "Autoplay was blocked by the browser. Setting up interaction listeners.",
-          error
-        );
+        console.log("Intro autoplay blocked, setting up interaction listeners:", error);
         setupInteractionListeners();
       }
     };
 
     const setupInteractionListeners = () => {
-      const events = ["touchstart", "mousedown", "keydown"];
+      const events = ["touchstart", "mousedown", "keydown", "scroll"];
 
       const playOnInteraction = async () => {
-        if (video.currentTime > 0) return; // Już gra, nie rób nic więcej
         try {
-          video.muted = true;
-          video.volume = 0;
-          await video.play();
-          console.log("Video started after user interaction");
+          introVideo.muted = true;
+          introVideo.volume = 0;
+          await introVideo.play();
+          console.log("Intro video started after user interaction");
 
           // Usuń listenery po udanym odtworzeniu
           events.forEach((event) => {
             document.removeEventListener(event, playOnInteraction);
           });
         } catch (err) {
-          console.log("Failed to play video on interaction:", err);
+          console.log("Failed to play intro video on interaction:", err);
         }
       };
 
@@ -73,20 +71,43 @@ export default function Landing() {
       };
     };
 
-    // Próbuj odtworzyć, gdy wideo jest gotowe do odtwarzania
-    if (videoReady) {
-      setTimeout(tryPlayVideo, 100);
-    }
+    // Natychmiastowa próba odtworzenia intro
+    setTimeout(tryPlayIntro, 100);
 
-    // Zwróć funkcję cleanup, która jest uruchamiana, gdy komponent jest odmontowywany
-    // lub gdy zależności (isClient, videoReady) się zmieniają.
     return setupInteractionListeners();
-  }, [isClient, videoReady]);
+  }, [isClient]);
 
-  const handleVideoCanPlay = () => {
-    if (!videoReady) {
-      setVideoReady(true);
-    }
+  // Obsługa przejścia z intro do głównego video
+  const handleIntroEnded = async () => {
+    console.log("Intro video ended, switching to main video");
+    setIntroCompleted(true);
+    setCurrentVideo("main");
+
+    // Natychmiastowe uruchomienie głównego video (przeniesienie zaufania)
+    setTimeout(async () => {
+      if (mainVideoRef.current) {
+        try {
+          mainVideoRef.current.muted = true;
+          mainVideoRef.current.volume = 0;
+          await mainVideoRef.current.play();
+          console.log("Main video started with trust transfer");
+        } catch (error) {
+          console.log("Failed to start main video:", error);
+        }
+      }
+    }, 50);
+  };
+
+  const handleIntroCanPlay = () => {
+    console.log("Intro video can play");
+  };
+
+  const handleMainVideoCanPlay = () => {
+    console.log("Main video can play");
+  };
+
+  const handleVideoError = (e, type) => {
+    console.error(`Error loading ${type} video:`, e);
   };
 
   if (!isClient) return null;
@@ -94,22 +115,47 @@ export default function Landing() {
   return (
     <main className={styles.main}>
       <div className={styles.videoWrapper}>
-        <video
-          ref={videoRef}
-          className={styles.backgroundVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto" // Zmienione z 'metadata' na 'auto' by spróbować pobrać więcej danych
-          poster={videoPoster} // <-- WAŻNY DODATEK
-          onCanPlay={handleVideoCanPlay}
-          controls={false}
-          disablePictureInPicture
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* Intro Video - bardzo lekkie, 1-2 sekundy */}
+        {currentVideo === "intro" && (
+          <video
+            ref={introVideoRef}
+            className={styles.backgroundVideo}
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            onCanPlay={handleIntroCanPlay}
+            onEnded={handleIntroEnded}
+            onError={(e) => handleVideoError(e, "intro")}
+            controls={false}
+            disablePictureInPicture
+            webkit-playsinline="true"
+          >
+            <source src={introVideoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
+
+        {/* Main Video - główne, cięższe video */}
+        {currentVideo === "main" && (
+          <video
+            ref={mainVideoRef}
+            className={styles.backgroundVideo}
+            loop
+            muted
+            playsInline
+            preload={introCompleted ? "auto" : "none"} // Ładuj tylko po intro
+            poster={!introCompleted ? videoPoster : undefined}
+            onCanPlay={handleMainVideoCanPlay}
+            onError={(e) => handleVideoError(e, "main")}
+            controls={false}
+            disablePictureInPicture
+            webkit-playsinline="true"
+          >
+            <source src={mainVideoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
       </div>
     </main>
   );
