@@ -31,11 +31,7 @@ export default function Contact() {
 
   const rotate = useTransform(scrollYProgress, [0, 1], [120, 90]);
   return (
-    <motion.div
-      style={isDesktop ? {} : {}}
-      ref={container}
-      className={styles.contact}
-    >
+    <motion.div style={{ y }} ref={container} className={styles.contact}>
       <div className={styles.body}>
         <div className={styles.title}>
           <span>

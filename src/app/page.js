@@ -15,44 +15,18 @@ export default function Home() {
 
   useEffect(() => {
     setHasMounted(true);
+    (async () => {
+      const LocomotiveScroll = (await import("locomotive-scroll")).default;
+      const locomotiveScroll = new LocomotiveScroll();
 
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-      document.body.style.cursor = "default";
-      // Usuń window.scrollTo - może interferować z video autoplay
-      // window.scrollTo(0, 0);
-    }, 2000);
-
-    return () => clearTimeout(timeout);
+      const timeout = setTimeout(() => {
+        setIsLoading(false);
+        document.body.style.cursor = "default";
+        window.scrollTo(0, 0);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    })();
   }, []);
-
-  // Inicjalizuj Locomotive Scroll dopiero po załadowaniu wszystkich komponentów
-  useEffect(() => {
-    if (!isLoading && hasMounted) {
-      (async () => {
-        const LocomotiveScroll = (await import("locomotive-scroll")).default;
-
-        // Małe opóźnienie aby komponenty się wyrenderowały
-        setTimeout(() => {
-          const locomotiveScroll = new LocomotiveScroll({
-            el: document.querySelector('[data-scroll-container]'),
-            smooth: true,
-            smartphone: {
-              smooth: true,
-            },
-            tablet: {
-              smooth: true,
-            },
-          });
-
-          // Cleanup przy unmount
-          return () => {
-            if (locomotiveScroll) locomotiveScroll.destroy();
-          };
-        }, 500); // Daj czas video na autoplay
-      })();
-    }
-  }, [isLoading, hasMounted]);
 
   if (!hasMounted) return null;
 
