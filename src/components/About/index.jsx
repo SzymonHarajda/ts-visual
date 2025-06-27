@@ -8,6 +8,7 @@ import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
 const About = () => {
   const container = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: container,
@@ -26,15 +27,16 @@ const About = () => {
 
     window.addEventListener("resize", handleResize);
 
-    const timer = setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "instant",
-      });
-    }, 100);
+    // Usuń window.scrollTo - może powodować problemy
+    // const timer = setTimeout(() => {
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: "instant",
+    //   });
+    // }, 100);
 
     return () => {
-      clearTimeout(timer);
+      // clearTimeout(timer);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -67,12 +69,17 @@ const About = () => {
           </div>
           <div className={styles.imageContainer}>
             <Image
-              height={800}
-              width={600}
+              fill // Użyj fill zamiast stałych wymiarów
               src="/modern/cam_2.jpg"
               alt="Tomasz Michałek"
               className={styles.image}
-              priority // Dla lepszej wydajności
+              style={{
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              priority
+              onLoad={() => setImageLoaded(true)}
+              sizes="(max-width: 480px) 80vw, (max-width: 768px) 70vw, (max-width: 1200px) 60vw, 25vw"
             />
           </div>
         </section>

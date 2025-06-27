@@ -10,7 +10,7 @@ const AboutPage = () => {
 
   useEffect(() => {
     setHasMounted(true);
-    
+
     // Identyczna implementacja jak w głównej stronie
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
@@ -18,7 +18,7 @@ const AboutPage = () => {
         el: document.querySelector("[data-scroll-container]"),
         smooth: true,
       });
-      
+
       // Cleanup jeśli potrzebny
       return () => {
         if (locomotiveScroll) locomotiveScroll.destroy();
@@ -33,7 +33,6 @@ const AboutPage = () => {
       <Header />
       <div className={styles.separator} />
       <About />
-      <Contact />
     </div>
   );
 };
