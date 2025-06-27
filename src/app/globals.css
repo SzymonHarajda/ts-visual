@@ -3,4 +3,7 @@ body {
   font-family: "HeyWow-Medium", sans-serif;
   overflow: hidden;
   cursor: wait;
+  @media screen and (max-width: 1200px) {
+    overflow: auto;
+  }
 }
