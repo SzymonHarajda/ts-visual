@@ -32,7 +32,7 @@ export default function Home() {
   if (!hasMounted) return null;
 
   return (
-    <main className="styles.main">
+    <main className="styles.main" data-scroll-container>
       <AnimatePresence mode="wait">
         {isLoading && <Preloader />}
       </AnimatePresence>

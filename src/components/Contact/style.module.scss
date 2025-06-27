@@ -18,6 +18,11 @@
       margin-left: 200px;
       margin-right: 200px;
       position: relative;
+      @media screen and (max-width: 1200px) {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-bottom: 50px;
+      }
       span {
         display: flex;
         align-items: center;
@@ -151,7 +156,7 @@
     .body {
       flex-direction: column;
       gap: 24px;
-      padding-top: 100px;
+      padding-top: 200px;
       .title {
         display: flex;
         flex-direction: column;
@@ -201,14 +206,12 @@
         }
       }
       .info {
-        align-items: center;
         margin-top: 50px;
         padding: 20px;
         
         div {
           width: 100%;
           display: flex;
-          justify-content: center;
           gap: 20px;
           
           p, h3 {
@@ -222,8 +225,6 @@
           
           span {
             display: flex;
-            flex-direction: column;
-            align-items: center;
             gap: 10px;
           }
         }
