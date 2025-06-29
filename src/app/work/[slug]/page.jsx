@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const projects = {
     "plac-uni": {
@@ -83,108 +83,110 @@ export default function ProjectPage() {
     const pathname = usePathname();
     const slug = pathname.split("/").pop();
     const project = projects[slug];
+    const [isMobile, setIsMobile] = useState(false);
     useLocomotiveScroll();
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsMobile(window.innerWidth <= 1024);
+        };
+
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+        return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
+    // Function to render image with overlay for first image
+    const renderImage = (img, altText, priorityFlag) => (
+        <div className={styles.relativeContainer}>
+            <Image
+                src={img.src}
+                alt={altText}
+                fill
+                quality={100}
+                priority={priorityFlag}
+                className={styles.projectImage}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            />
+            <div className={styles.overlayTile}>
+                <h2>{project.title}</h2>
+                <p>{project.description}</p>
+            </div>
+        </div>
+    );
 
     return (
         <>
             <Header />
             <main className={styles.projectPage}>
-
-
                 <div className={styles.projectImages}>
-                    {(() => {
-                        const elements = [];
-                        for (let i = 0; i < project.images.length; i++) {
-                            const image = project.images[i];
-                            if (!image) continue; // Bezpieczne sprawdzenie
+                    {project.images.map((image, i) => {
+                        if (!image) return null;
 
-                            // Funkcja pomocnicza do renderowania obrazu z overlay, gdy jest pierwszy obraz (indeks 0)
-                            const renderImage = (img, altText, priorityFlag) => (
-                                <div className={styles.relativeContainer}>
-                                    <Image
-                                        src={img.src}
-                                        alt={altText}
-                                        fill
-                                        quality={100}
-                                        priority={priorityFlag}
-                                        className={styles.projectImage}
-                                    />
-                                    <div className={styles.overlayTile}>
-                                        <h2>{project.title}</h2>
-                                        <p>{project.description}</p>
-                                    </div>
-                                </div>
+                        // For mobile screens (≤1024px), display all images individually
+                        if (isMobile) {
+                            return (
+                                <motion.div
+                                    key={`mobile-${i}`}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className={styles.imageContainer}
+                                >
+                                    {i === 0
+                                        ? renderImage(image, `${project.title} ${i + 1}`, true)
+                                        : (
+                                            <Image
+                                                src={image.src}
+                                                alt={`${project.title} ${i + 1}`}
+                                                fill
+                                                quality={100}
+                                                priority={i === 0}
+                                                className={styles.projectImage}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
+                                                placeholder="blur"
+                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                            />
+                                        )}
+                                </motion.div>
                             );
+                        }
 
-                            if (image.orientation === "landscape") {
-                                // Elementy landscape wyświetlamy pojedynczo
-                                elements.push(
-                                    <motion.div
-                                        key={`landscape-${i}`}
-                                        initial={{ opacity: 0, y: 50 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        className={styles.imageContainer}
-                                    >
-                                        {i === 0
-                                            ? renderImage(image, `${project.title} ${i + 1}`, true)
-                                            : (
-                                                <Image
-                                                    src={image.src}
-                                                    alt={`${project.title} ${i + 1}`}
-                                                    fill
-                                                    quality={100}
-                                                    priority={i === 0}
-                                                    className={styles.projectImage}
-                                                />
-                                            )}
-                                    </motion.div>
-                                );
-                            } else if (image.orientation === "portrait") {
-                                // Grupowanie zdjęć portrait po dwa, wyświetlane obok siebie
-                                const nextImage = project.images[i + 1];
-                                if (nextImage && nextImage.orientation === "portrait") {
-                                    elements.push(
-                                        <div key={`portrait-${i}`} className={styles.portraitRow}>
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 50 }}
-                                                whileInView={{ opacity: 1, y: 0 }}
-                                                viewport={{ once: true }}
-                                                className={`${styles.imageContainer} ${styles.portraitContainer}`}
-                                            >
-                                                {i === 0
-                                                    ? renderImage(image, `${project.title} ${i + 1}`, true)
-                                                    : (
-                                                        <Image
-                                                            src={image.src}
-                                                            alt={`${project.title} ${i + 1}`}
-                                                            fill
-                                                            quality={100}
-                                                            className={styles.projectImage}
-                                                        />
-                                                    )}
-                                            </motion.div>
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 50 }}
-                                                whileInView={{ opacity: 1, y: 0 }}
-                                                viewport={{ once: true }}
-                                                className={`${styles.imageContainer} ${styles.portraitContainer}`}
-                                            >
-                                                <Image
-                                                    src={nextImage.src}
-                                                    alt={`${project.title} ${i + 2}`}
-                                                    fill
-                                                    quality={100}
-                                                    className={styles.projectImage}
-                                                />
-                                            </motion.div>
-                                        </div>
-                                    );
-                                    i++; // pomijamy kolejny obraz, bo już został użyty
-                                } else {
-                                    elements.push(
+                        // For desktop screens (>1024px), use the original layout logic
+                        if (image.orientation === "landscape") {
+                            return (
+                                <motion.div
+                                    key={`landscape-${i}`}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className={styles.imageContainer}
+                                >
+                                    {i === 0
+                                        ? renderImage(image, `${project.title} ${i + 1}`, true)
+                                        : (
+                                            <Image
+                                                src={image.src}
+                                                alt={`${project.title} ${i + 1}`}
+                                                fill
+                                                quality={100}
+                                                priority={i === 0}
+                                                className={styles.projectImage}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
+                                                placeholder="blur"
+                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                            />
+                                        )}
+                                </motion.div>
+                            );
+                        } else if (image.orientation === "portrait") {
+                            const nextImage = project.images[i + 1];
+                            if (nextImage && nextImage.orientation === "portrait") {
+                                const portraitRow = (
+                                    <div key={`portrait-${i}`} className={styles.portraitRow}>
                                         <motion.div
-                                            key={`portrait-${i}`}
                                             initial={{ opacity: 0, y: 50 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
@@ -199,17 +201,64 @@ export default function ProjectPage() {
                                                         fill
                                                         quality={100}
                                                         className={styles.projectImage}
+                                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                                                        placeholder="blur"
+                                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                                                     />
                                                 )}
                                         </motion.div>
-                                    );
-                                }
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 50 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            className={`${styles.imageContainer} ${styles.portraitContainer}`}
+                                        >
+                                            <Image
+                                                src={nextImage.src}
+                                                alt={`${project.title} ${i + 2}`}
+                                                fill
+                                                quality={100}
+                                                className={styles.projectImage}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                                                placeholder="blur"
+                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                            />
+                                        </motion.div>
+                                    </div>
+                                );
+                                // Skip the next image since it's already used in the row
+                                project.images[i + 1] = null;
+                                return portraitRow;
+                            } else {
+                                return (
+                                    <motion.div
+                                        key={`portrait-${i}`}
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className={`${styles.imageContainer} ${styles.portraitContainer}`}
+                                    >
+                                        {i === 0
+                                            ? renderImage(image, `${project.title} ${i + 1}`, true)
+                                            : (
+                                                <Image
+                                                    src={image.src}
+                                                    alt={`${project.title} ${i + 1}`}
+                                                    fill
+                                                    quality={100}
+                                                    className={styles.projectImage}
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                                                    placeholder="blur"
+                                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                                />
+                                            )}
+                                    </motion.div>
+                                );
                             }
                         }
-                        return elements;
-                    })()}
+                        return null;
+                    })}
                 </div>
-
             </main>
         </>
     );

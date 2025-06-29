@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.scss";
 import WorkProject from "./components/WorkProject";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Header from "@/components/Header";
 import useLocomotiveScroll from "@/hooks/useLocomotiveScroll";
 
@@ -45,8 +45,38 @@ const projects = [
 
 export default function Work() {
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
   useLocomotiveScroll();
-  // Group projects into rows
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // For mobile screens (≤1024px), display projects individually
+  if (isMobile) {
+    return (
+      <>
+        <Header />
+        <main className={styles.workPage}>
+          <div className={styles.mobileProjects}>
+            {projects.map((project, index) => (
+              <div key={index} className={styles.mobileProjectCell}>
+                <WorkProject project={project} />
+              </div>
+            ))}
+          </div>
+        </main>
+      </>
+    );
+  }
+
+  // For desktop screens (>1024px), use the original row-based layout
   const rows = [];
   let currentRow = [];
   let currentRowWidth = 0;

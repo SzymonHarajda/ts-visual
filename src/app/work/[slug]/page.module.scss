@@ -93,3 +93,53 @@
     }
   }
 }
+
+// Media query for mobile devices
+@media (max-width: 1024px) {
+  .projectPage {
+    padding: 80px 1rem;
+
+    .projectImages {
+      gap: 1rem;
+
+      .imageContainer {
+        height: 60vh;
+        min-height: 400px;
+
+        &.portraitContainer {
+          width: 100%;
+          height: 60vh;
+          min-height: 400px;
+        }
+
+        .projectImage {
+          object-fit: cover;
+          image-rendering: -webkit-optimize-contrast;
+          image-rendering: crisp-edges;
+          backface-visibility: hidden;
+          transform: translateZ(0);
+          will-change: transform;
+        }
+      }
+
+      .portraitRow {
+        display: none; // Hide portrait rows on mobile
+      }
+    }
+
+    .overlayTile {
+      bottom: 1rem;
+      left: 1rem;
+      max-width: 280px;
+      padding: 1rem;
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

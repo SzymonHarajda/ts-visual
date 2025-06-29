@@ -1,5 +1,26 @@
 .workPage {
   padding-top:70px;
+  
+  // Mobile layout for screens ≤1024px
+  .mobileProjects {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1rem;
+    
+    .mobileProjectCell {
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
   .projectRow {
     display: flex;
     height: 93dvh;
@@ -31,6 +52,15 @@
 
     &.doubleCell {
       width: 50%;
+    }
+  }
+}
+
+// Media query for mobile devices
+@media (max-width: 1024px) {
+  .workPage {
+    .projectRow {
+      display: none; // Hide desktop layout on mobile
     }
   }
 }
