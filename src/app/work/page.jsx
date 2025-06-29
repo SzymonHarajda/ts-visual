@@ -49,8 +49,15 @@ export default function Work() {
   useLocomotiveScroll();
 
   useEffect(() => {
+    // Przewiń do góry strony
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 1024);
+      setIsMobile(window.innerWidth <= 1400);
     };
 
     checkScreenSize();

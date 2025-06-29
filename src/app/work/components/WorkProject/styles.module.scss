@@ -72,13 +72,37 @@
   }
 }
 
+// Media query for screens ≤1200px - centrowanie i białe tło
+@media (max-width: 1400px) {
+  .projectCard {
+    .projectItem {
+      .imageContainer {
+        background-color: #f5ececf6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .imageWrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .projectImage {
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}
+
 // Media query for better image quality on smaller screens
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .projectCard {
     .projectItem {
       .imageContainer {
         .projectImage {
-          object-fit: cover;
+          object-fit: contain;
           image-rendering: -webkit-optimize-contrast;
           image-rendering: crisp-edges;
           backface-visibility: hidden;

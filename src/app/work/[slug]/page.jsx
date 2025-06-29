@@ -87,8 +87,15 @@ export default function ProjectPage() {
     useLocomotiveScroll();
 
     useEffect(() => {
+        // Przewiń do góry strony
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+
         const checkScreenSize = () => {
-            setIsMobile(window.innerWidth <= 1024);
+            setIsMobile(window.innerWidth <= 1200);
         };
 
         checkScreenSize();
@@ -122,6 +129,22 @@ export default function ProjectPage() {
             <Header />
             <main className={styles.projectPage}>
                 <div className={styles.projectImages}>
+                    {/* Na mniejszych ekranach, pokaż opis projektu jako pierwszy kafelek */}
+                    {isMobile && (
+                        <motion.div
+                            key="mobile-description"
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className={styles.mobileDescriptionContainer}
+                        >
+                            <div className={styles.mobileDescription}>
+                                <h2>{project.title}</h2>
+                                <p>{project.description}</p>
+                            </div>
+                        </motion.div>
+                    )}
+
                     {project.images.map((image, i) => {
                         if (!image) return null;
 
@@ -135,21 +158,17 @@ export default function ProjectPage() {
                                     viewport={{ once: true }}
                                     className={styles.imageContainer}
                                 >
-                                    {i === 0
-                                        ? renderImage(image, `${project.title} ${i + 1}`, true)
-                                        : (
-                                            <Image
-                                                src={image.src}
-                                                alt={`${project.title} ${i + 1}`}
-                                                fill
-                                                quality={100}
-                                                priority={i === 0}
-                                                className={styles.projectImage}
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
-                                                placeholder="blur"
-                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                                            />
-                                        )}
+                                    <Image
+                                        src={image.src}
+                                        alt={`${project.title} ${i + 1}`}
+                                        fill
+                                        quality={100}
+                                        priority={i === 0}
+                                        className={styles.projectImage}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
+                                        placeholder="blur"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                    />
                                 </motion.div>
                             );
                         }

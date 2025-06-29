@@ -11,6 +11,13 @@ const AboutPage = () => {
   useEffect(() => {
     setHasMounted(true);
 
+    // Przewiń do góry strony
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
     // Identyczna implementacja jak w głównej stronie
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;

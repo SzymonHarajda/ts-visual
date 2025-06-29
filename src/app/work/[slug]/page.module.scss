@@ -51,6 +51,7 @@
       position: relative;
       width: 100%;
       height: 80vh;
+      display: block;
 
       &.portraitContainer {
         width: 50%;
@@ -60,6 +61,13 @@
 
       .projectImage {
         object-fit: cover;
+        width: 100%;
+        height: 100%;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        will-change: transform;
       }
     }
 
@@ -68,6 +76,19 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: block;
+    overflow: hidden;
+
+    .projectImage {
+      object-fit: cover !important;
+      width: 100% !important;
+      height: 100% !important;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+      will-change: transform;
+    }
   }
 
   .overlayTile {
@@ -94,16 +115,71 @@
   }
 }
 
+// Media query for screens ≤1200px - centrowanie i białe tło
+@media (max-width: 1200px) {
+  .projectPage {
+    .projectImages {
+      .imageContainer {
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .projectImage {
+          object-fit: contain;
+        }
+      }
+    }
+
+    .relativeContainer {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .projectImage {
+        object-fit: contain !important;
+      }
+    }
+  }
+}
+
 // Media query for mobile devices
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .projectPage {
     padding: 80px 1rem;
+
+    .mobileDescriptionContainer {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .mobileDescription {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid #eee;
+
+      h2 {
+        font-size: 2rem;
+        margin: 0 0 1rem 0;
+        color: #333;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #666;
+        margin: 0;
+      }
+    }
 
     .projectImages {
       gap: 1rem;
 
       .imageContainer {
-        height: 60vh;
+        height: 35vh;
         min-height: 400px;
 
         &.portraitContainer {
@@ -113,7 +189,7 @@
         }
 
         .projectImage {
-          object-fit: cover;
+          object-fit: contain;
           image-rendering: -webkit-optimize-contrast;
           image-rendering: crisp-edges;
           backface-visibility: hidden;
@@ -123,7 +199,7 @@
       }
 
       .portraitRow {
-        display: none; // Hide portrait rows on mobile
+        display: none;
       }
     }
 

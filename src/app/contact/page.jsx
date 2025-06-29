@@ -63,6 +63,13 @@ export default function Contact() {
   };
 
   useEffect(() => {
+    // Przewiń do góry strony
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
     (async () => {
       const LocomotiveScroll = (await import("locomotive-scroll")).default;
       new LocomotiveScroll();

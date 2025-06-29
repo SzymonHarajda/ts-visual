@@ -56,6 +56,17 @@ export default function Header() {
     });
   }, []);
 
+  // Prefetch pages on hover
+  const handleLinkHover = (href) => {
+    if (href !== pathname) {
+      // Prefetch the page
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = href;
+      document.head.appendChild(link);
+    }
+  };
+
   return (
     <>
       <div ref={header} className={styles.header}>
@@ -91,6 +102,7 @@ export default function Header() {
               <Magnetic>
                 <div
                   className={`${styles.el} ${pathname === "/" ? styles.elActive : ""}`}
+                  onMouseEnter={() => handleLinkHover("/")}
                 >
                   <Link href="/">Home</Link>
                   <div className={styles.indicator}></div>
@@ -99,6 +111,7 @@ export default function Header() {
               <Magnetic>
                 <div
                   className={`${styles.el} ${pathname === "/work" ? styles.elActive : ""}`}
+                  onMouseEnter={() => handleLinkHover("/work")}
                 >
                   <Link href="/work">Work</Link>
                   <div className={styles.indicator}></div>
@@ -107,6 +120,7 @@ export default function Header() {
               <Magnetic>
                 <div
                   className={`${styles.el} ${pathname === "/about" ? styles.elActive : ""}`}
+                  onMouseEnter={() => handleLinkHover("/about")}
                 >
                   <Link href="/about">About</Link>
                   <div className={styles.indicator}></div>
@@ -115,6 +129,7 @@ export default function Header() {
               <Magnetic>
                 <div
                   className={`${styles.el} ${pathname === "/contact" ? styles.elActive : ""}`}
+                  onMouseEnter={() => handleLinkHover("/contact")}
                 >
                   <Link href="/contact">Contact</Link>
                   <div className={styles.indicator}></div>

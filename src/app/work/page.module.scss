@@ -56,6 +56,27 @@
   }
 }
 
+// Media query for screens ≤1200px - centrowanie i białe tło
+@media (max-width: 1400px) {
+  .workPage {
+    .mobileProjects {
+      .mobileProjectCell {
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+
+    .projectCell {
+      &.bigCell {
+        img {
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}
+
 // Media query for mobile devices
 @media (max-width: 1024px) {
   .workPage {
