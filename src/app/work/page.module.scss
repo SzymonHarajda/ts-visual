@@ -56,13 +56,13 @@
   }
 }
 
-// Media query for screens ≤1200px - centrowanie i białe tło
+// Media query for screens ≤1400px - centrowanie i białe tło
 @media (max-width: 1400px) {
   .workPage {
     .mobileProjects {
       .mobileProjectCell {
         img {
-          object-fit: contain;
+          object-fit: cover;
         }
       }
     }
@@ -70,7 +70,7 @@
     .projectCell {
       &.bigCell {
         img {
-          object-fit: contain;
+          object-fit: cover;
         }
       }
     }
@@ -78,7 +78,7 @@
 }
 
 // Media query for mobile devices
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .workPage {
     .projectRow {
       display: none; // Hide desktop layout on mobile

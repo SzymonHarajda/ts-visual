@@ -72,44 +72,23 @@
   }
 }
 
-// Media query for screens ≤1200px - centrowanie i białe tło
+// Media query for screens ≤1400px - centrowanie i białe tło
 @media (max-width: 1400px) {
   .projectCard {
     .projectItem {
       .imageContainer {
-        background-color: #f5ececf6;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: block;
 
         .imageWrapper {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: block;
         }
 
         .projectImage {
-          object-fit: contain;
+          object-fit: cover;
         }
       }
     }
   }
 }
 
-// Media query for better image quality on smaller screens
-@media (max-width: 1200px) {
-  .projectCard {
-    .projectItem {
-      .imageContainer {
-        .projectImage {
-          object-fit: contain;
-          image-rendering: -webkit-optimize-contrast;
-          image-rendering: crisp-edges;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-          will-change: transform;
-        }
-      }
-    }
-  }
-}
+//

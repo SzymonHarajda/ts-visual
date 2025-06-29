@@ -179,13 +179,13 @@
       gap: 1rem;
 
       .imageContainer {
-        height: 35vh;
+        height: 30vh;
         min-height: 400px;
 
         &.portraitContainer {
           width: 100%;
-          height: 60vh;
-          min-height: 400px;
+          height: 35vh;
+          min-height: 300px;
         }
 
         .projectImage {
