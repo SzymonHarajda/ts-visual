@@ -35,15 +35,15 @@ const projects = {
             { src: "/grano/CAM_6.jpg", orientation: "portrait" },
         ]
     },
-    "masurian-cabi": {
-        title: "Masurian Cabi",
+    "masurian-cabin": {
+        title: "Masurian Cabin",
         description: "Tucked away in the heart of a serene Masurian village, this modern cabin is a true retreat into nature. Nestled beside a small, unique lake, it stands in perfect solitude, embraced by towering pines and whispering birches. With no neighbors in sight, the only company here is the gentle rustling of leaves, the soft lapping of water, and the occasional song of a passing bird.",
         category: "Interior",
         images: [
             { src: "/modern/cam_3.jpg", orientation: "landscape" },
             { src: "/modern/cam_1.jpg", orientation: "portrait" },
-            { src: "/modern/cam_2.jpg", orientation: "portrait" },
             { src: "/modern/cam_4.jpg", orientation: "portrait" },
+            { src: "/modern/cam_2.jpg", orientation: "portrait" },
         ]
     },
     "arlon-53": {
@@ -145,67 +145,121 @@ export default function ProjectPage() {
                         </motion.div>
                     )}
 
-                    {project.images.map((image, i) => {
-                        if (!image) return null;
+                    {(() => {
+                        const renderedElements = [];
+                        let skipNext = false;
 
-                        // For mobile screens (≤1024px), display all images individually
-                        if (isMobile) {
-                            return (
-                                <motion.div
-                                    key={`mobile-${i}`}
-                                    initial={{ opacity: 0, y: 50 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    className={styles.imageContainer}
-                                >
-                                    <Image
-                                        src={image.src}
-                                        alt={`${project.title} ${i + 1}`}
-                                        fill
-                                        quality={100}
-                                        priority={i === 0}
-                                        className={styles.projectImage}
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
-                                        placeholder="blur"
-                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                                    />
-                                </motion.div>
-                            );
-                        }
+                        for (let i = 0; i < project.images.length; i++) {
+                            const image = project.images[i];
+                            if (!image || skipNext) {
+                                skipNext = false;
+                                continue;
+                            }
 
-                        // For desktop screens (>1024px), use the original layout logic
-                        if (image.orientation === "landscape") {
-                            return (
-                                <motion.div
-                                    key={`landscape-${i}`}
-                                    initial={{ opacity: 0, y: 50 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    className={styles.imageContainer}
-                                >
-                                    {i === 0
-                                        ? renderImage(image, `${project.title} ${i + 1}`, true)
-                                        : (
-                                            <Image
-                                                src={image.src}
-                                                alt={`${project.title} ${i + 1}`}
-                                                fill
-                                                quality={100}
-                                                priority={i === 0}
-                                                className={styles.projectImage}
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
-                                                placeholder="blur"
-                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                                            />
-                                        )}
-                                </motion.div>
-                            );
-                        } else if (image.orientation === "portrait") {
-                            const nextImage = project.images[i + 1];
-                            if (nextImage && nextImage.orientation === "portrait") {
-                                const portraitRow = (
-                                    <div key={`portrait-${i}`} className={styles.portraitRow}>
+                            // For mobile screens (≤1200px), display all images individually
+                            if (isMobile) {
+                                renderedElements.push(
+                                    <motion.div
+                                        key={`mobile-${i}`}
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className={styles.imageContainer}
+                                    >
+                                        <Image
+                                            src={image.src}
+                                            alt={`${project.title} ${i + 1}`}
+                                            fill
+                                            quality={100}
+                                            priority={i === 0}
+                                            className={styles.projectImage}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
+                                            placeholder="blur"
+                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                        />
+                                    </motion.div>
+                                );
+                                continue;
+                            }
+
+                            // For desktop screens (>1200px), use the original layout logic
+                            if (image.orientation === "landscape") {
+                                renderedElements.push(
+                                    <motion.div
+                                        key={`landscape-${i}`}
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className={styles.imageContainer}
+                                    >
+                                        {i === 0
+                                            ? renderImage(image, `${project.title} ${i + 1}`, true)
+                                            : (
+                                                <Image
+                                                    src={image.src}
+                                                    alt={`${project.title} ${i + 1}`}
+                                                    fill
+                                                    quality={100}
+                                                    priority={i === 0}
+                                                    className={styles.projectImage}
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
+                                                    placeholder="blur"
+                                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                                />
+                                            )}
+                                    </motion.div>
+                                );
+                            } else if (image.orientation === "portrait") {
+                                const nextImage = project.images[i + 1];
+                                if (nextImage && nextImage.orientation === "portrait") {
+                                    renderedElements.push(
+                                        <div key={`portrait-${i}`} className={styles.portraitRow}>
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 50 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true }}
+                                                className={`${styles.imageContainer} ${styles.portraitContainer}`}
+                                            >
+                                                {i === 0
+                                                    ? renderImage(image, `${project.title} ${i + 1}`, true)
+                                                    : (
+                                                        <Image
+                                                            src={image.src}
+                                                            alt={`${project.title} ${i + 1}`}
+                                                            fill
+                                                            quality={100}
+                                                            className={styles.projectImage}
+                                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                                                            placeholder="blur"
+                                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                                        />
+                                                    )}
+                                            </motion.div>
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 50 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true }}
+                                                className={`${styles.imageContainer} ${styles.portraitContainer}`}
+                                            >
+                                                <Image
+                                                    src={nextImage.src}
+                                                    alt={`${project.title} ${i + 2}`}
+                                                    fill
+                                                    quality={100}
+                                                    className={styles.projectImage}
+                                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                                                    placeholder="blur"
+                                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                                                />
+                                            </motion.div>
+                                        </div>
+                                    );
+                                    // Skip the next image since it's already used in the row
+                                    skipNext = true;
+                                } else {
+                                    renderedElements.push(
                                         <motion.div
+                                            key={`portrait-${i}`}
                                             initial={{ opacity: 0, y: 50 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
@@ -226,57 +280,13 @@ export default function ProjectPage() {
                                                     />
                                                 )}
                                         </motion.div>
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 50 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            className={`${styles.imageContainer} ${styles.portraitContainer}`}
-                                        >
-                                            <Image
-                                                src={nextImage.src}
-                                                alt={`${project.title} ${i + 2}`}
-                                                fill
-                                                quality={100}
-                                                className={styles.projectImage}
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                                                placeholder="blur"
-                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                                            />
-                                        </motion.div>
-                                    </div>
-                                );
-                                // Skip the next image since it's already used in the row
-                                project.images[i + 1] = null;
-                                return portraitRow;
-                            } else {
-                                return (
-                                    <motion.div
-                                        key={`portrait-${i}`}
-                                        initial={{ opacity: 0, y: 50 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        className={`${styles.imageContainer} ${styles.portraitContainer}`}
-                                    >
-                                        {i === 0
-                                            ? renderImage(image, `${project.title} ${i + 1}`, true)
-                                            : (
-                                                <Image
-                                                    src={image.src}
-                                                    alt={`${project.title} ${i + 1}`}
-                                                    fill
-                                                    quality={100}
-                                                    className={styles.projectImage}
-                                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                                                    placeholder="blur"
-                                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                                                />
-                                            )}
-                                    </motion.div>
-                                );
+                                    );
+                                }
                             }
                         }
-                        return null;
-                    })}
+                        
+                        return renderedElements;
+                    })()}
                 </div>
             </main>
         </>
