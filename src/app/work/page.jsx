@@ -41,6 +41,13 @@ const projects = [
     slug: "souverain-100",
     type: "big",
   },
+  {
+    title: "Brussels Penthouse",
+    category: "Interior",
+    image: "/Brussels/kitchen_2 copy.jpg",
+    slug: "brussels-penthouse",
+    type: "big",
+  },
 ];
 
 export default function Work() {

@@ -19,6 +19,11 @@ const projects = [
     title2: "Cabin",
     src: "/modern/cam_1.jpg",
   },
+  {
+    title1: "Brussels",
+    title2: "Penthouse",
+    src: "/Brussels/kitchen_2 copy.jpg",
+  },
 ];
 
 export default function Project() {
