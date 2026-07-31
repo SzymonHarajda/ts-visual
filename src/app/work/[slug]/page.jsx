@@ -82,14 +82,14 @@ const projects = {
         description: "A penthouse apartment in Brussels, located in a renovated brutalist building in the city's central district.",
         category: "Interior",
         images: [
-            { src: "/Brussels/kitchen_2 copy.jpg", orientation: "landscape" },
-            { src: "/Brussels/kitchen_1 copy.jpg", orientation: "portrait" },
-            { src: "/Brussels/kitchen_closeup copy.jpg", orientation: "portrait" },
-            { src: "/Brussels/livingroom_1 copy.jpg", orientation: "landscape" },
-            { src: "/Brussels/livingroom_2 copy.jpg", orientation: "portrait" },
+            { src: "/Brussels/kitchen_2_copy.jpg", orientation: "landscape" },
+            { src: "/Brussels/kitchen_1_copy.jpg", orientation: "portrait" },
+            { src: "/Brussels/kitchen_closeup_copy.jpg", orientation: "portrait" },
+            { src: "/Brussels/livingroom_1_copy.jpg", orientation: "landscape" },
+            { src: "/Brussels/livingroom_2_copy.jpg", orientation: "portrait" },
             { src: "/Brussels/livingroom_3copy.jpg", orientation: "portrait" },
-            { src: "/Brussels/table_1 copy.jpg", orientation: "portrait" },
-            { src: "/Brussels/table_2 copy.jpg", orientation: "portrait" },
+            { src: "/Brussels/table_1_copy.jpg", orientation: "portrait" },
+            { src: "/Brussels/table_2_copy.jpg", orientation: "portrait" },
         ]
     },
 };
@@ -127,6 +127,7 @@ export default function ProjectPage() {
                 fill
                 quality={100}
                 priority={priorityFlag}
+                unoptimized
                 className={styles.projectImage}
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 80vw"
                 placeholder="blur"

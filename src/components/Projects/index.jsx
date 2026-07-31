@@ -22,7 +22,7 @@ const projects = [
   {
     title1: "Brussels",
     title2: "Penthouse",
-    src: "/Brussels/kitchen_2 copy.jpg",
+    src: "/Brussels/kitchen_2_copy.jpg",
   },
 ];
 

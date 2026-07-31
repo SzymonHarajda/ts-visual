@@ -44,7 +44,7 @@ const projects = [
   {
     title: "Brussels Penthouse",
     category: "Interior",
-    image: "/Brussels/kitchen_2 copy.jpg",
+    image: "/Brussels/kitchen_2_copy.jpg",
     slug: "brussels-penthouse",
     type: "big",
   },
